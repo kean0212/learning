@@ -28,9 +28,34 @@ bool isAllUnique(string str) {
     return true;
 }
 
+// 1.2
+void reverse(char *str) {
+    if (str == NULL) {
+        return;
+    }
+    char *end = str;
+    while (*end != '\0') {
+        ++end;
+    }
+    --end;
+    char *start = str;
+    char tmp;
+    while (start < end) {
+        tmp = *start;
+        *start++ = *end;
+        *end-- = tmp;
+    }
+    return;
+}
 
 // main function
 int main() {
-    string str = "helo world";
-    cout << isAllUnique(str) << endl;
+    // test 1.1
+//    string str = "helo world";
+//    cout << isAllUnique(str) << endl;
+    
+    // test 1.2
+//    char str[] = "world";
+//    reverse(str);
+//    cout << str << endl;
 }
