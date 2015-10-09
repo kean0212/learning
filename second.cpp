@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -48,6 +49,29 @@ void reverse(char *str) {
     return;
 }
 
+// 1.3
+bool isPermutation(string str1, string str2) {
+    if (str1.length() != str2.length()) {
+        return false;
+    }
+    int length = min((int)str1.length(), 256);
+    int *array = new int[length]();
+    int index1, index2;
+    for (int i = 0; i < str1.length(); ++i) {
+        index1 = (int)str1[i];
+        array[index1]++;
+        index2 = (int)str2[i];
+        array[index2]--;
+    }
+    for (int i = 0; i < length; ++i) {
+        if (array[i] != 0) {
+            return false;
+        }
+    }
+    delete array;
+    return true;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -58,4 +82,9 @@ int main() {
 //    char str[] = "world";
 //    reverse(str);
 //    cout << str << endl;
+    
+    // test 1.3
+//    string str1 = "hello";
+//    string str2 = "ollhe";
+//    cout << isPermutation(str1, str2) << endl;
 }
