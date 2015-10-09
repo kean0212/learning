@@ -12,6 +12,9 @@ using namespace std;
 
 // 1.1
 bool isAllUnique(string str) {
+    if (str.length() > 256) {
+        return false;
+    }
     bool hash_table[256] = {false};
     int index = 0;
     for (int i = 0; i < str.length(); ++i) {
