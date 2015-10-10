@@ -72,6 +72,34 @@ bool isPermutation(string str1, string str2) {
     return true;
 }
 
+// 1.4
+void replaceAllSpaces(string &input, int length) {
+    int number_spaces = 0;
+    for (int i = 0; i < length; ++i) {
+        if (input[i] == ' ') {
+            number_spaces++;
+        }
+    }
+    char tmp;
+    int new_length = length + 2 * number_spaces;
+    input[new_length] = '\0';
+    while (number_spaces > 0) {
+        tmp = input[length - 1];
+        if (tmp != ' ') {
+            input[new_length - 1] = tmp;
+            length--;
+            new_length--;
+        } else {
+            input[new_length - 1] = '0';
+            input[new_length - 2] = '2';
+            input[new_length - 3] = '%';
+            length--;
+            new_length -= 3;
+            number_spaces--;
+        }
+    }
+}
+
 // main function
 int main() {
     // test 1.1
@@ -87,4 +115,9 @@ int main() {
 //    string str1 = "hello";
 //    string str2 = "ollhe";
 //    cout << isPermutation(str1, str2) << endl;
+    
+    // test 1.4
+//    string str1 = "Mr John Smith         ";
+//    replaceAllSpaces(str1, 13);
+//    cout << str1 << endl;
 }
