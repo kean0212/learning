@@ -236,6 +236,24 @@ void update(int **mat, int M, int N) {
     }
 }
 
+// 1.8
+bool isSubstring(string s1, string s2) {
+    size_t found = s2.find(s1);
+    if (found != string::npos) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool isRotation(string s1, string s2) {
+    int length = s1.length();
+    if (length == s2.length() && length > 0) {
+        return isSubstring(s1, s2 + s2);
+    }
+    return false;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -260,4 +278,9 @@ int main() {
     // test 1.5
 //    string str = "aabcccccaaa";
 //    cout << compress(str) << endl;
+    
+    // test 1.8
+//    string s1 = "waterbottle";
+//    string s2 = "erbottlewat";
+//    cout << isRotation(s1, s2) << endl;
 }
