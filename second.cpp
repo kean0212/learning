@@ -9,6 +9,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <unordered_set>
 
 using namespace std;
 
@@ -252,6 +253,62 @@ bool isRotation(string s1, string s2) {
         return isSubstring(s1, s2 + s2);
     }
     return false;
+}
+
+// 2.1
+class Node {
+    
+public:
+    int data;
+    Node *next;
+
+    int getData() {
+        return data;
+    }
+    
+    Node *getNext() {
+        return next;
+    }
+};
+
+Node *removeDuplicates(Node *head) {
+    if (head == NULL) {
+        return NULL;
+    }
+    Node *n = head;
+    unordered_set<int> hash;
+    int current_data;
+    while (n->next != NULL) {
+        current_data = n->next->data;
+        if (hash.count(current_data) == 0) {
+            hash.insert(current_data);
+        } else {
+            n->next = n->next->next;
+        }
+        n = n->next;
+    }
+    return head;
+}
+
+// follow up
+Node *removeDuplicatesFU(Node *head) {
+    if (head == NULL) {
+        return NULL;
+    }
+    Node *first_ptr = head;
+    Node *second_ptr;
+    while (first_ptr != NULL) {
+        second_ptr = first_ptr;
+        while (second_ptr->next != NULL) {
+            if (second_ptr->next->data == first_ptr->data) {
+                second_ptr->next = second_ptr->next->next;
+            } else {
+                second_ptr = second_ptr->next;
+            }
+        }
+        first_ptr = first_ptr->next;
+    }
+    return head;
 }
 
 // main function
