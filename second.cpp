@@ -186,6 +186,56 @@ void rotate90(int **image, int n) {
     }
 }
 
+// 1.7
+void update(int **mat, int M, int N) {
+    bool has_zero_at_top = false;
+    bool has_zero_at_left = false;
+    for (int i = 0; i < N; ++i) {
+        if (mat[0][i] == 0) {
+            has_zero_at_top = true;
+            break;
+        }
+    }
+    for (int i = 0; i < M; ++i) {
+        if (mat[i][0] == 0) {
+            has_zero_at_left = true;
+            break;
+        }
+    }
+    for (int i = 1; i < M; ++i) {
+        for (int j = 1; j < N; ++j) {
+            if (mat[i][j] == 0) {
+                mat[i][0] = 0;
+                mat[0][j] = 0;
+            }
+        }
+    }
+    for (int i = 1; i < N; ++i) {
+        if (mat[0][i] == 0) {
+            for (int j = 1; j < M; ++j) {
+                mat[j][i] = 0;
+            }
+        }
+    }
+    for (int i = 1; i < M; ++i) {
+        if (mat[i][0] == 0) {
+            for (int j = 1; j < N; ++j) {
+                mat[i][j] = 0;
+            }
+        }
+    }
+    if (has_zero_at_top) {
+        for (int i = 0; i < N; ++i) {
+            mat[0][i] = 0;
+        }
+    }
+    if (has_zero_at_left) {
+        for (int i = 0; i < M; ++i) {
+            mat[i][0] = 0;
+        }
+    }
+}
+
 // main function
 int main() {
     // test 1.1
