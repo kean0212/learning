@@ -164,6 +164,28 @@ string compress(string str) {
     return res;
 }
 
+// 1.6
+// since it's in-place, it has to be NxN matrix
+void rotate90(int **image, int n) {
+    for (int layer = 0; layer < n / 2; ++layer) {
+        int first = layer;
+        int last = n - 1 - layer;
+        for (int i = first; i < last; ++i) {
+            int offset = i - first;
+            // save the top
+            int tmp = image[first][i];
+            // left -> top
+            image[first][i] = image[last - offset][first];
+            // bottom -> left
+            image[last - offset][first] = image[last][last - offset];
+            // right -> bottom
+            image[last][last - offset] = image[i][last];
+            // top -> right
+            image[i][last] = tmp;
+        }
+    }
+}
+
 // main function
 int main() {
     // test 1.1
@@ -186,6 +208,6 @@ int main() {
 //    cout << str1 << endl;
 
     // test 1.5
-    string str = "aabcccccaaa";
-    cout << compress(str) << endl;
+//    string str = "aabcccccaaa";
+//    cout << compress(str) << endl;
 }
