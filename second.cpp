@@ -261,7 +261,12 @@ class Node {
 public:
     int data;
     Node *next;
-
+    
+    Node(int d, Node *n) {
+        data = d;
+        next = n;
+    }
+    
     int getData() {
         return data;
     }
@@ -385,6 +390,82 @@ Node *partition(Node *head, int x) {
     tail_first->next = head_second;
     tail_second->next= NULL;
     return head_first;
+}
+
+// 2.5
+Node *add(Node *n1, Node *n2, int carry) {
+    if (n1 == NULL && n2 == NULL && carry == 0) {
+        return NULL;
+    }
+    int val = carry;
+    if (n1 != NULL) {
+        val += n1->data;
+    }
+    if (n2 != NULL) {
+        val += n2->data;
+    }
+    Node *res = new Node(val % 10, NULL);
+    if (n1 != NULL || n2 != NULL) {
+        Node *more = add(n1 == NULL ? NULL : n1->next,
+                         n2 == NULL ? NULL : n2->next,
+                         val > 10 ? 1 : 0);
+        res->next = more;
+    }
+    return res;
+}
+
+// Follow up
+int countListLength(Node *n) {
+    int count = 0;
+    while (n != NULL) {
+        count++;
+        n = n->next;
+    }
+    return count;
+}
+
+Node *padList(Node *n, int length) {
+    for (int i = 0; i < length; ++i) {
+        Node *new_node = new Node(0, n);
+        n = new_node;
+    }
+    return n;
+}
+
+Node *addLists(Node *n1, Node *n2, int &carry) {
+    if (n1 == NULL && n2 == NULL) {
+        carry = 0;
+        return NULL;
+    }
+    Node *more = addLists(n1, n2, carry);
+    int val = carry + n1->data + n2->data;
+    Node *res= new Node(val % 10, more);
+    carry = val / 10;
+    return res;
+}
+
+Node *addFU(Node *n1, Node *n2) {
+    if (n1 == NULL) {
+        return n2;
+    }
+    if (n2 == NULL) {
+        return n1;
+    }
+    int length1 = countListLength(n1);
+    int length2 = countListLength(n2);
+    if (length1 < length2) {
+        n1 = padList(n1, length2 - length1);
+    } else if (length1 > length2) {
+        n2 = padList(n2, length1 - length2);
+    }
+    int carry = 0;
+    Node *res = addLists(n1, n2, carry);
+    if (carry == 0) {
+        return res;
+    } else {
+        Node *new_res = new Node(carry, res);
+        return new_res;
+    }
 }
 
 // main function
