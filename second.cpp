@@ -468,6 +468,28 @@ Node *addFU(Node *n1, Node *n2) {
     }
 }
 
+// 2.6
+Node *getStartOfLoop(Node *head) {
+    Node *slow_ptr = head;
+    Node *fast_ptr = head;
+    while (fast_ptr != NULL && fast_ptr->next != NULL) {
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+        if (slow_ptr == fast_ptr) {
+            break;
+        }
+    }
+    if (fast_ptr == NULL || slow_ptr == NULL) {
+        return NULL;
+    }
+    fast_ptr = head;
+    while (slow_ptr != fast_ptr) {
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next;
+    }
+    return slow_ptr;
+}
+
 // main function
 int main() {
     // test 1.1
