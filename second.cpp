@@ -348,6 +348,45 @@ bool deleteNode(Node *n) {
     return true;
 }
 
+// 2.4
+Node *partition(Node *head, int x) {
+    Node *head_first = NULL;
+    Node *tail_first = NULL;
+    Node *head_second = NULL;
+    Node *tail_second = NULL;
+    while (head != NULL) {
+        if (head->data < x) {
+            if (head_first == NULL) {
+                head_first = head;
+                tail_first = head;
+            } else {
+                tail_first->next = head;
+                tail_first = head;
+            }
+        } else {
+            if (head_second == NULL) {
+                head_second = head;
+                tail_second = head;
+            } else {
+                tail_second->next = head;
+                tail_second = head;
+            }
+        }
+        head = head->next;
+    }
+    if (head_first == NULL && head_second != NULL) {
+        tail_second->next = NULL;
+        return head_second;
+    }
+    if (head_first != NULL && head_second == NULL) {
+        tail_first->next = NULL;
+        return head_first;
+    }
+    tail_first->next = head_second;
+    tail_second->next= NULL;
+    return head_first;
+}
+
 // main function
 int main() {
     // test 1.1
