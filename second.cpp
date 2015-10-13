@@ -334,6 +334,20 @@ Node *findKthToLast(Node *head, int k) {
     return first;
 }
 
+// 2.3
+bool deleteNode(Node *n) {
+    if (n == NULL) {
+        return false;
+    }
+    if (n->next == NULL) {
+        n = NULL;
+        return true;
+    }
+    n->data = n->next->data;
+    n->next = n->next->next;
+    return true;
+}
+
 // main function
 int main() {
     // test 1.1
