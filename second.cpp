@@ -311,6 +311,29 @@ Node *removeDuplicatesFU(Node *head) {
     return head;
 }
 
+// 2.2 iterative solution
+Node *findKthToLast(Node *head, int k) {
+    if (k <= 0) {
+        return NULL;
+    }
+    Node *first = head;
+    Node *second = head;
+    for (int i = 0; i < k - 1; ++i) {
+        if (second == NULL) {
+            return NULL;
+        }
+        second = second->next;
+    }
+    if (second == NULL) {
+        return NULL;
+    }
+    while (second->next != NULL) {
+        first = first->next;
+        second = second->next;
+    }
+    return first;
+}
+
 // main function
 int main() {
     // test 1.1
