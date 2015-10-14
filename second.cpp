@@ -632,6 +632,7 @@ public:
         right = r;
     }
 };
+
 // using pre-order traversal
 void generateLists(vector<list<BTNode *> > &lists, BTNode *root, int height) {
     if (root == NULL) {
@@ -647,9 +648,35 @@ void generateLists(vector<list<BTNode *> > &lists, BTNode *root, int height) {
     generateLists(lists, root->left, height + 1);
     generateLists(lists, root->right, height + 1);
 }
-vector<list<BTNode *> > generateLists(BTNode *root) {
+
+vector<list<BTNode *> > generateListsPO(BTNode *root) {
     vector<list<BTNode *> > lists;
     generateLists(lists, root, 0);
+    return lists;
+}
+
+// using BFS
+vector<list<BTNode *> > generateLists(BTNode *root) {
+    vector<list<BTNode *> > lists;
+    if (root == NULL) {
+        return lists;
+    }
+    list<BTNode *> current;
+    current.push_back(root);
+    list<BTNode *> parents;
+    while (!current.empty()) {
+        lists.push_back(current);
+        parents = current;
+        current.clear();
+        for (BTNode *parent : parents) {
+            if (parent->left != NULL) {
+                current.push_back(parent->left);
+            }
+            if (parent->right != NULL) {
+                current.push_back(parent->right);
+            }
+        }
+    }
     return lists;
 }
 
