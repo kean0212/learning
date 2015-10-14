@@ -11,6 +11,7 @@
 #include <string>
 #include <unordered_set>
 #include <stack>
+#include <cmath>
 
 using namespace std;
 
@@ -519,6 +520,41 @@ bool isPalindrome(Node *head) {
 }
 
 // using recursion
+
+// 4.1
+class TreeNode {
+public:
+    
+    TreeNode *left;
+    TreeNode *right;
+};
+
+int checkHeight(TreeNode *root) {
+    if (root == NULL) {
+        return 0;
+    }
+    int left_height = checkHeight(root->left);
+    if (left_height == -1) {
+        return -1;
+    }
+    int right_height = checkHeight(root->right);
+    if (right_height == -1) {
+        return -1;
+    }
+    if (abs(left_height - right_height) <= 1) {
+        return max(left_height, right_height) + 1;
+    } else {
+        return -1;
+    }
+}
+
+bool isBSTBalanced(TreeNode *root) {
+    if (checkHeight(root) == -1) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // main function
 int main() {
