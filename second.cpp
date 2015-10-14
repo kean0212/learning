@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <string>
 #include <unordered_set>
+#include <stack>
 
 using namespace std;
 
@@ -489,6 +490,35 @@ Node *getStartOfLoop(Node *head) {
     }
     return slow_ptr;
 }
+
+// 2.7
+// using stack
+bool isPalindrome(Node *head) {
+    if (head == NULL || head->next == NULL) {
+        return true;
+    }
+    Node *slow_ptr = head;
+    Node *fast_ptr = head;
+    stack<Node *> s;
+    while (fast_ptr != NULL && fast_ptr->next != NULL) {
+        s.push(slow_ptr);
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+    }
+    if (fast_ptr->next == NULL) {
+        slow_ptr = slow_ptr->next;
+    }
+    while (slow_ptr != NULL) {
+        if (slow_ptr->data != s.top()->data) {
+            return false;
+        }
+        s.pop();
+        slow_ptr = slow_ptr->next;
+    }
+    return true;
+}
+
+// using recursion
 
 // main function
 int main() {
