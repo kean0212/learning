@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <stack>
 #include <cmath>
+#include <queue>
 
 using namespace std;
 
@@ -554,6 +555,36 @@ bool isBSTBalanced(TreeNode *root) {
     } else {
         return true;
     }
+}
+
+// 4.2
+class GraphNode {
+public:
+    bool isVisited = false;
+    vector<GraphNode *> children;
+};
+
+bool isConnected(GraphNode *A, GraphNode *B) {
+    if (A == NULL || B == NULL) {
+        return false;
+    }
+    queue<GraphNode *> q;
+    q.push(A);
+    GraphNode *tmp;
+    while (!q.empty()) {
+        tmp = q.front();
+        if (tmp != NULL && !tmp->isVisited) {
+            if (tmp == B) {
+                return true;
+            }
+            tmp->isVisited = true;
+            for (GraphNode *n : tmp->children) {
+                q.push(n);
+            }
+        }
+        q.pop();
+    }
+    return false;
 }
 
 // main function
