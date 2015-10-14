@@ -13,6 +13,8 @@
 #include <stack>
 #include <cmath>
 #include <queue>
+#include <vector>
+#include <list>
 
 using namespace std;
 
@@ -616,6 +618,39 @@ BSTNode *constructBST(int array[], int length) {
         return NULL;
     }
     return constructBST(array, 0, length - 1);
+}
+
+// 4.4
+class BTNode {
+public:
+    int data;
+    BTNode *left;
+    BTNode *right;
+    BTNode(int d, BTNode *l, BTNode *r) {
+        data = d;
+        left = l;
+        right = r;
+    }
+};
+// using pre-order traversal
+void generateLists(vector<list<BTNode *> > &lists, BTNode *root, int height) {
+    if (root == NULL) {
+        return;
+    }
+    if (height < lists.size()) {
+        lists[height].push_back(root);
+    } else {
+        list<BTNode *> l;
+        l.push_back(root);
+        lists.push_back(l);
+    }
+    generateLists(lists, root->left, height + 1);
+    generateLists(lists, root->right, height + 1);
+}
+vector<list<BTNode *> > generateLists(BTNode *root) {
+    vector<list<BTNode *> > lists;
+    generateLists(lists, root, 0);
+    return lists;
 }
 
 // main function
