@@ -587,6 +587,37 @@ bool isConnected(GraphNode *A, GraphNode *B) {
     return false;
 }
 
+// 4.3
+class BSTNode {
+public:
+    int data;
+    BSTNode *left;
+    BSTNode *right;
+    BSTNode(int d, BSTNode *l, BSTNode *r) {
+        data = d;
+        left = l;
+        right = r;
+    }
+};
+
+BSTNode *constructBST(int array[], int start, int end) {
+    if (start > end) {
+        return NULL;
+    }
+    int mid = (start + end) / 2;
+    BSTNode *res = new BSTNode(array[mid], NULL, NULL);
+    res->left = constructBST(array, start, mid - 1);
+    res->right = constructBST(array, mid + 1, end);
+    return res;
+}
+
+BSTNode *constructBST(int array[], int length) {
+    if (array == NULL) {
+        return NULL;
+    }
+    return constructBST(array, 0, length - 1);
+}
+
 // main function
 int main() {
     // test 1.1
