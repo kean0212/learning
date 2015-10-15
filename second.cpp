@@ -790,6 +790,48 @@ bool isSubtree(BTNode *a, BTNode *b) {
     return isSubtree(a->left, b) || isSubtree(a->right, b);
 }
 
+// 4.9
+int depth(BTNode *root) {
+    if (root == NULL) {
+        return 0;
+    }
+    return max(depth(root->left), depth(root->right)) + 1;
+}
+
+void printArray(int *array, int start, int end) {
+    for (int i = start; i <= end; ++i) {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+}
+
+void printAllPaths(BTNode *root, int sum, int *array, int level) {
+    if (root == NULL) {
+        return;
+    }
+    
+    array[level] = root->data;
+    
+    int s = 0;
+    for (int i = level; i >= 0; --i) {
+        s += array[i];
+        if (s == sum) {
+            printArray(array, i, level);
+        }
+    }
+    
+    printAllPaths(root->left, sum, array, level + 1);
+    printAllPaths(root->right, sum, array, level + 1);
+    
+    return;
+}
+
+void printAllPaths(BTNode *root, int sum) {
+    int depth_tree = depth(root);
+    int *array = new int[depth_tree];
+    printAllPaths(root, sum, array, 0);
+}
+
 // main function
 int main() {
     // test 1.1
