@@ -757,6 +757,39 @@ TreeNode2 *findInorderSuccessor(TreeNode2 *n) {
     }
 }
 
+// 4.8
+bool matchTree(BTNode *a, BTNode *b) {
+    if (a == NULL && b == NULL) {
+        return true;
+    }
+    if (a == NULL || b == NULL) {
+        return false;
+    }
+    if (a->data != b->data) {
+        return false;
+    }
+    if (!matchTree(a->left, b->left) ||
+        !matchTree(a->right, b->right)) {
+        return false;
+    }
+    return true;
+}
+
+bool isSubtree(BTNode *a, BTNode *b) {
+    if (b == NULL) {
+        return true;
+    }
+    if (a == NULL) {
+        return false;
+    }
+    if (a->data == b->data) {
+        if (matchTree(a, b)) {
+            return true;
+        }
+    }
+    return isSubtree(a->left, b) || isSubtree(a->right, b);
+}
+
 // main function
 int main() {
     // test 1.1
