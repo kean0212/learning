@@ -724,6 +724,39 @@ bool isBSTTWo(BTNode *root) {
     return isBSTDF(root, numeric_limits<int>::min(), numeric_limits<int>::max());
 }
 
+// 4.6
+class TreeNode2 {
+public:
+    int data;
+    TreeNode2 *left;
+    TreeNode2 *right;
+    TreeNode2 *parent;
+};
+
+TreeNode2 *inorderTraverse(TreeNode2 *n) {
+    while (n->left != NULL) {
+        n = n->left;
+    }
+    return n;
+}
+
+TreeNode2 *findInorderSuccessor(TreeNode2 *n) {
+    if (n == NULL) {
+        return NULL;
+    }
+    if (n->right != NULL) {
+        return inorderTraverse(n->right);
+    } else {
+        TreeNode2 *x = n;
+        TreeNode2 *p = n->parent;
+        while (p != NULL && p->left != x) {
+            x = p;
+            p = p->parent;
+        }
+        return p;
+    }
+}
+
 // main function
 int main() {
     // test 1.1
