@@ -15,6 +15,7 @@
 #include <queue>
 #include <vector>
 #include <list>
+#include <limits>
 
 using namespace std;
 
@@ -681,26 +682,46 @@ vector<list<BTNode *> > generateLists(BTNode *root) {
 }
 
 // 4.5
-bool isBST(BTNode *root, int *last) {
+// using in-order traversal
+bool isBSTIO(BTNode *root, int *last) {
     if (root == NULL) {
         return true;
     }
-    if (!isBST(root->left, last)) {
+    if (!isBSTIO(root->left, last)) {
         return false;
     }
     if (last != NULL && *last > root->data) {
         return false;
     }
     last = &(root->data);
-    if (!isBST(root->right, last)) {
+    if (!isBSTIO(root->right, last)) {
         return false;
     }
     return true;
 }
 
-bool isBST(BTNode *root) {
+bool isBSTOne(BTNode *root) {
     int *last = NULL;
-    return isBST(root, last);
+    return isBSTIO(root, last);
+}
+
+// using left <= top < right
+bool isBSTDF(BTNode *root, int min, int max) {
+    if (root == NULL) {
+        return true;
+    }
+    if (root->data <= min || root->data > max) {
+        return false;
+    }
+    if (!isBSTDF(root->left, min, root->data) ||
+        !isBSTDF(root->right, root->data, max)) {
+        return false;
+    }
+    return true;
+}
+
+bool isBSTTWo(BTNode *root) {
+    return isBSTDF(root, numeric_limits<int>::min(), numeric_limits<int>::max());
 }
 
 // main function
