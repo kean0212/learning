@@ -680,6 +680,29 @@ vector<list<BTNode *> > generateLists(BTNode *root) {
     return lists;
 }
 
+// 4.5
+bool isBST(BTNode *root, int *last) {
+    if (root == NULL) {
+        return true;
+    }
+    if (!isBST(root->left, last)) {
+        return false;
+    }
+    if (last != NULL && *last > root->data) {
+        return false;
+    }
+    last = &(root->data);
+    if (!isBST(root->right, last)) {
+        return false;
+    }
+    return true;
+}
+
+bool isBST(BTNode *root) {
+    int *last = NULL;
+    return isBST(root, last);
+}
+
 // main function
 int main() {
     // test 1.1
