@@ -443,7 +443,7 @@ Node *addLists(Node *n1, Node *n2, int &carry) {
         carry = 0;
         return NULL;
     }
-    Node *more = addLists(n1, n2, carry);
+    Node *more = addLists(n1->next, n2->next, carry);
     int val = carry + n1->data + n2->data;
     Node *res= new Node(val % 10, more);
     carry = val / 10;
