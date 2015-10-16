@@ -926,7 +926,7 @@ int getNextSmallest(int n) {
         num_ones++;
         n >>= 1;
     }
-    if (n == 0) {
+    if (n == 0) { // 0000.....11111 || 11111...11111
         return -1;
     }
     while ((n & 1) == 0) {
@@ -943,7 +943,7 @@ int getNextSmallest(int n) {
 int getNextLargest(int n) {
     int num_zeros = 0;
     int num_ones = 0;
-    while ((n & 1) == 0) {
+    while ((n & 1) == 0 && (n != 0)) {
         num_zeros++;
         n >>= 1;
     }
@@ -1013,10 +1013,10 @@ int main() {
 //    printBinaryRep(x);
     
     // test 5.3
-//    int x = 13;
-//    cout << getNextSmallest(x) << endl;
-    int x = 13;
-    cout << getNextLargest(x) << endl;
+//    int a = 15;
+//    cout << getNextSmallest(a) << endl;
+//    int b = 0;
+//    cout << getNextLargest(b) << endl;
     
     // test 5.5
 //    int a = 29, b = 15;
