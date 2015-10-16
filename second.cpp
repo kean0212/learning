@@ -918,6 +918,15 @@ void printBinaryRep(double x) {
     cout << res << endl;
 }
 
+// 5.5
+int countFlips(int A, int B) {
+    int count = 0;
+    for (int C = A ^ B; C != 0; C = C & (C - 1)) {
+        count++;
+    }
+    return count;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -949,6 +958,10 @@ int main() {
 //    cout << isRotation(s1, s2) << endl;
     
     // test 5.2
-    double x = 0.75;
-    printBinaryRep(x);
+//    double x = 0.75;
+//    printBinaryRep(x);
+    
+    // test 5.5
+//    int a = 29, b = 15;
+//    cout << countFlips(a, b) << endl;
 }
