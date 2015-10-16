@@ -927,6 +927,11 @@ int countFlips(int A, int B) {
     return count;
 }
 
+// 5.6
+int swapOddEven(int a) {
+    return ((a & 0xaaaaaaaa) >> 1) | ((a & 0x55555555) << 1);
+}
+
 // main function
 int main() {
     // test 1.1
