@@ -918,6 +918,28 @@ void printBinaryRep(double x) {
     cout << res << endl;
 }
 
+// 5.3
+int getNextSmallest(int n) {
+    int num_zeros = 0;
+    int num_ones = 0;
+    while ((n & 1) == 1) {
+        num_ones++;
+        n >>= 1;
+    }
+    if (n == 0) {
+        return -1;
+    }
+    while ((n & 1) == 0) {
+        num_zeros++;
+        n >>= 1;
+    }
+    n--; // flip the last one
+    num_zeros--;
+    num_ones++;
+    int mask = ((1 << num_ones) - 1) << num_zeros;
+    return (n << (num_zeros + num_ones)) | mask;
+}
+
 // 5.5
 int countFlips(int A, int B) {
     int count = 0;
