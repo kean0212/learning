@@ -882,6 +882,15 @@ void printAllPaths(BTNode *root, int sum) {
     printAllPaths(root, sum, array, 0);
 }
 
+// 5.1
+int insert(int N, int M, int i, int j) {
+    int mask1 = (1 << (j + 1)) - 1;
+    int mask2 = (1 << i) - 1;
+    int mask = mask1 ^ mask2;
+    int n_cleared = N & mask;
+    return n_cleared | (M << i);
+}
+
 // main function
 int main() {
     // test 1.1
