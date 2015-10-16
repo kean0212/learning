@@ -988,6 +988,10 @@ int main() {
 //    double x = 0.75;
 //    printBinaryRep(x);
     
+    // test 5.3
+//    int x = 13;
+//    cout << getNextSmallest(x) << endl;
+    
     // test 5.5
 //    int a = 29, b = 15;
 //    cout << countFlips(a, b) << endl;
