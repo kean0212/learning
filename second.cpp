@@ -757,6 +757,56 @@ TreeNode2 *findInorderSuccessor(TreeNode2 *n) {
     }
 }
 
+// 4.7
+class Result {
+public:
+    BTNode *node;
+    bool isAncestor;
+    Result(BTNode *n, bool b) {
+        node = n;
+        isAncestor = b;
+    }
+    Result(const Result &res) { // shallow copy
+        node = res.node;
+        isAncestor = res.isAncestor;
+    }
+};
+
+Result findCommonAncestorHelper(BTNode *root, BTNode *a, BTNode *b) {
+    if (root == NULL) {
+        return Result(NULL, false);
+    }
+    if (root == a && root == b) {
+        return Result(root, true);
+    }
+    
+    Result left_res = findCommonAncestorHelper(root->left, a, b);
+    if (left_res.isAncestor) {
+        return left_res;
+    }
+    Result right_res = findCommonAncestorHelper(root->right, a, b);
+    if (right_res.isAncestor) {
+        return right_res;
+    }
+    
+    if (left_res.node != NULL && right_res.node != NULL) {
+        return Result(root, true);
+    } else if (root == a || root == b) {
+        bool flag = left_res.node != NULL || right_res.node != NULL ? true : false;
+        return Result(root, true);
+    } else {
+        return Result(left_res.node != NULL ? left_res.node : right_res.node, false);
+    }
+}
+
+BTNode *findCommonAncestor(BTNode *root, BTNode *a, BTNode *b) {
+    Result res = findCommonAncestorHelper(root, a, b);
+    if (res.isAncestor) {
+        return res.node;
+    }
+    return NULL;
+}
+
 // 4.8
 bool matchTree(BTNode *a, BTNode *b) {
     if (a == NULL && b == NULL) {
