@@ -940,6 +940,30 @@ int getNextSmallest(int n) {
     return (n << (num_zeros + num_ones)) | mask;
 }
 
+int getNextLargest(int n) {
+    int num_zeros = 0;
+    int num_ones = 0;
+    while ((n & 1) == 0) {
+        num_zeros++;
+        n >>= 1;
+    }
+    if (n == 0) { // 0000000....00000
+        return -1;
+    }
+    while ((n & 1) == 1) {
+        num_ones++;
+        n >>= 1;
+    }
+    if (n == 0) { // 111111....0000000
+        return -1;
+    }
+    n++; // flip the last digit
+    num_ones--;
+    num_zeros++;
+    int mask = (1 << num_ones) - 1;
+    return (n << (num_ones + num_zeros)) | mask;
+}
+
 // 5.5
 int countFlips(int A, int B) {
     int count = 0;
@@ -991,6 +1015,8 @@ int main() {
     // test 5.3
 //    int x = 13;
 //    cout << getNextSmallest(x) << endl;
+    int x = 13;
+    cout << getNextLargest(x) << endl;
     
     // test 5.5
 //    int a = 29, b = 15;
