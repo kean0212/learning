@@ -978,6 +978,75 @@ int swapOddEven(int a) {
     return ((a & 0xaaaaaaaa) >> 1) | ((a & 0x55555555) << 1);
 }
 
+// 5.7
+// My solution - more space-efficient
+void findMissingIntHelper(list<int> &array, int bit, int *res) {
+    if (array.empty()) {
+        return;
+    }
+    
+    list<int>::iterator it;
+    // count the numbers of 0's and 1's at bit
+    int num_zeros = 0;
+    int num_ones = 0;
+    for (it = array.begin(); it != array.end(); ++it) {
+        (*it & (1 << bit)) > 0 ? num_ones++ : num_zeros++;
+    }
+    
+    // find out which is missing
+    bool missingOne = num_zeros > num_ones ? true : false;
+    if (missingOne) {
+        *res |= (1 << bit);
+    }
+    
+    bool isOne;
+    for (it = array.begin(); it != array.end(); ++it) {
+        isOne = (*it & (1 << bit)) > 0 ? true : false;
+        if (missingOne && !isOne) { // 1 is missing, then erase all ints with 0 at bit
+            array.erase(it);
+        }
+        if (!missingOne && isOne) { // 0 is missing, then erase all ints with 1 at bit
+            array.erase(it);
+        }
+    }
+    
+    findMissingIntHelper(array, bit + 1, res);
+}
+
+int findMissingInt(list<int> array) {
+    int res = 0;
+    findMissingIntHelper(array, 0, &res);
+    return res;
+}
+
+// The solution on book - more readable
+int fetch(int i, int j) {
+    int res;
+    (i & (1 << j)) > 0 ? res = 1 : res = 0;
+    return res;
+}
+
+int findMissingIntHelperTwo(list<int> l, int bit) {
+    if (l.empty()) {
+        return 0;
+    }
+    list<int> oneBits;
+    list<int> zeroBits;
+    for (int i : l) {
+        fetch(i, bit) == 1 ? oneBits.push_back(i) : zeroBits.push_back(i);
+    }
+    
+    if (zeroBits.size() > oneBits.size()) {
+        return (findMissingIntHelperTwo(oneBits, bit + 1) << 1) | 1;
+    } else {
+        return (findMissingIntHelperTwo(zeroBits, bit + 1) << 1) | 0;
+    }
+}
+
+int findMissingIntTwo(list<int> l) {
+    return findMissingIntHelperTwo(l, 0);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1021,4 +1090,15 @@ int main() {
     // test 5.5
 //    int a = 29, b = 15;
 //    cout << countFlips(a, b) << endl;
+    
+    // test 5.7
+//    int array[] = {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12};
+//    list<int> l(array, array + sizeof(array) / sizeof(int));
+//    list<int>::iterator it;
+//    for (it = l.begin(); it != l.end(); ++it) {
+//        cout << *it << " ";
+//    }
+//    cout << endl;
+//    cout << findMissingInt(l) << endl;
+//    cout << findMissingIntTwo(l) << endl;
 }
