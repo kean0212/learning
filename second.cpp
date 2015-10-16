@@ -891,6 +891,33 @@ int insert(int N, int M, int i, int j) {
     return n_cleared | (M << i);
 }
 
+// 5.2
+void printBinaryRep(double x) {
+    if (x <= 0 || x >= 1) {
+        cout << "Error" << endl;
+        return;
+    }
+    double frac = 0.5;
+    string res = ".";
+    res.reserve(32);
+    int count = 0;
+    while (x != 0) {
+        if (count > 30) {
+            cout << "Error" << endl;
+            return;
+        }
+        if (x >= frac) {
+            res += "1";
+            x -= frac;
+        } else {
+            res += "0";
+        }
+        frac *= 0.5;
+        count++;
+    }
+    cout << res << endl;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -920,4 +947,8 @@ int main() {
 //    string s1 = "waterbottle";
 //    string s2 = "erbottlewat";
 //    cout << isRotation(s1, s2) << endl;
+    
+    // test 5.2
+    double x = 0.75;
+    printBinaryRep(x);
 }
