@@ -1135,6 +1135,24 @@ bool doesIntersect(Line1 l1, Line1 l2) {
     return true;
 }
 
+// Line representation: y = ax + b
+struct Line2 {
+    double slope;
+    double y_intercept;
+    Line2(double slope, double y_intercept) {
+        this->slope = slope;
+        this->y_intercept = y_intercept;
+    }
+};
+
+bool doesIntersect(Line2 l1, Line2 l2) {
+    double epsilon = 0.000001;
+    if (abs(l1.slope - l2.slope) > epsilon || l1.y_intercept == l2.y_intercept) {
+        return true;
+    }
+    return false;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1206,7 +1224,7 @@ int main() {
 //    cout << endl;
     
     // test 7.3
-    Line1 l1(1, 2, 4);
-    Line1 l2(2, 4, 8);
-    cout << doesIntersect(l1, l2) << endl;
+//    Line1 l1(1, 2, 4);
+//    Line1 l2(2, 4, 8);
+//    cout << doesIntersect(l1, l2) << endl;
 }
