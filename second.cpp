@@ -1125,10 +1125,11 @@ struct Line1 {
 };
 
 bool doesIntersect(Line1 l1, Line1 l2) {
-    if (l1.b == 0 && l2.b == 0) {
+    bool isYInterceptSame = l1.c * l2.a == l1.a * l2.c;
+    if (l1.b == 0 && l2.b == 0 && !isYInterceptSame) {
         return false;
     }
-    if (l1.a * l2.b == l1.b * l2.a) {
+    if (l1.a * l2.b == l1.b * l2.a && !isYInterceptSame) {
         return false;
     }
     return true;
@@ -1206,6 +1207,6 @@ int main() {
     
     // test 7.3
     Line1 l1(1, 2, 4);
-    Line1 l2(1, 4, 6);
+    Line1 l2(2, 4, 8);
     cout << doesIntersect(l1, l2) << endl;
 }
