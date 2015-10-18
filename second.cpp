@@ -1101,4 +1101,9 @@ int main() {
 //    cout << endl;
 //    cout << findMissingInt(l) << endl;
 //    cout << findMissingIntTwo(l) << endl;
+    
+    // test i++ and ++i
+//    int i = 2;
+//    cout << i++ << endl; // 2
+//    cout << ++i << endl; // 4
 }
