@@ -1081,6 +1081,36 @@ void drawHorizontalLine(byte array[], int w, int x1, int x2, int y) {
     }
 }
 
+// Generate a list of primes from 2 through max
+void crossoff(vector<bool> &flags, int prime) {
+    for (int i = prime * prime; i < flags.size(); i += prime) {
+        flags[i] = false;
+    }
+}
+
+int getNextPrime(vector<bool> flags, int prime) {
+    int next = prime + 1;
+    while (next < flags.size() && !flags[next]) {
+        next++;
+    }
+    return next;
+}
+
+vector<bool> sieveOfEratosthenes(int max) {
+    vector<bool> flags(max + 1, true);
+    flags[0] = false;
+    flags[1] = false;
+    int prime = 2;
+    while (prime <= sqrt(max)) {
+        crossoff(flags, prime);
+        prime = getNextPrime(flags, prime);
+        if (prime >= flags.size()) {
+            break;
+        }
+    }
+    return flags;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1140,4 +1170,14 @@ int main() {
 //    int i = 2;
 //    cout << i++ << endl; // 2
 //    cout << ++i << endl; // 4
+    
+    // test for sieve of eratosthenes
+//    int max = 30;
+//    vector<bool> res = sieveOfEratosthenes(max);
+//    for (int i = 0; i < res.size(); ++i) {
+//        if (res[i]) {
+//            cout << i << " ";
+//        }
+//    }
+//    cout << endl;
 }
