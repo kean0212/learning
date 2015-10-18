@@ -1111,6 +1111,29 @@ vector<bool> sieveOfEratosthenes(int max) {
     return flags;
 }
 
+// 7.3
+// Line representation: ax + by = c
+struct Line1 {
+    int a;
+    int b;
+    int c;
+    Line1(int a, int b, int c) {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+};
+
+bool doesIntersect(Line1 l1, Line1 l2) {
+    if (l1.b == 0 && l2.b == 0) {
+        return false;
+    }
+    if (l1.a * l2.b == l1.b * l2.a) {
+        return false;
+    }
+    return true;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1180,4 +1203,9 @@ int main() {
 //        }
 //    }
 //    cout << endl;
+    
+    // test 7.3
+    Line1 l1(1, 2, 4);
+    Line1 l2(1, 4, 6);
+    cout << doesIntersect(l1, l2) << endl;
 }
