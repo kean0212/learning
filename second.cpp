@@ -1047,6 +1047,40 @@ int findMissingIntTwo(list<int> l) {
     return findMissingIntHelperTwo(l, 0);
 }
 
+// 5.8
+using byte = unsigned char;
+void drawHorizontalLine(byte array[], int w, int x1, int x2, int y) {
+    // x1 is not necessarily to the left of x2
+    int left = x1, right = x2;
+    if (x1 > x2) {
+        left = x2;
+        right = x1;
+    }
+    
+    // calculate the positions of the bytes
+    int above_bytes = y * w / 8;
+    int left_bytes = left / 8;
+    int left_offset = left % 8;
+    int right_bytes = right / 8;
+    int right_offset = right % 8;
+    
+    // create masks
+    int left_mask = ~0 >> left_offset;
+    int right_mask = ~0 << (7 - right_offset);
+    
+    if (left_bytes == right_bytes) {
+        // if they are in the same byte
+        array[above_bytes + left_bytes] |= (left_mask & right_mask);
+    } else {
+        // if they are in different bytes
+        array[above_bytes + left_bytes] |= left_mask;
+        for (int i = above_bytes + left_bytes + 1; i < above_bytes + right_bytes; ++i) {
+            array[i] = ~0;
+        }
+        array[above_bytes + right_bytes] |= right_mask;
+    }
+}
+
 // main function
 int main() {
     // test 1.1
