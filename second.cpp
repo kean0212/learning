@@ -1153,6 +1153,61 @@ bool doesIntersect(Line2 l1, Line2 l2) {
     return false;
 }
 
+// 7.4
+int negate1(int a) {
+    return ~a + 1;
+}
+
+int negate2(int a) {
+    int neg = 0;
+    int d = a > 0 ? -1 : 1;
+    while (a != 0) {
+        neg += d;
+        a += d;
+    }
+    return neg;
+}
+
+int absolute(int a) {
+    if (a < 0) {
+        return negate2(a);
+    }
+    return a;
+}
+
+int subtract(int a, int b) {
+    return a + negate2(b);
+}
+
+int multiply(int a, int b) {
+    int res = 0;
+    for (int i = abs(b); i > 0; --i) {
+        res += a;
+    }
+    if (b < 0) {
+        return negate2(res);
+    }
+    return res;
+}
+
+int divide(int a, int b) {
+    if (b == 0) {
+        return numeric_limits<int>::min();
+    }
+    int abs_a = absolute(a);
+    int abs_b = absolute(b);
+    int count = 0;
+    int product = 0;
+    while (product + abs_b <= abs_a) {
+        product += abs_b;
+        count++;
+    }
+    if ((b < 0 && a > 0) || (a < 0 && b > 0)) {
+        return negate2(count);
+    }
+    return count;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1227,4 +1282,17 @@ int main() {
 //    Line1 l1(1, 2, 4);
 //    Line1 l2(2, 4, 8);
 //    cout << doesIntersect(l1, l2) << endl;
+    
+    // test 7.4
+//    int a = 5;
+//    int b = 13;
+//    int c = -5;
+//    int d = 0;
+//    cout << a << " - " << b << " = " << subtract(a, b) << endl;
+//    cout << b << " - " << a << " = " << subtract(b, a) << endl;
+//    cout << a << " * " << b << " = " << multiply(a, b) << endl;
+//    cout << a << " * " << c << " = " << multiply(a, c) << endl;
+//    cout << c << " * " << a << " = " << multiply(c, a) << endl;
+//    cout << a << " / " << c << " = " << divide(a, c) << endl;
+//    cout << c << " / " << a << " = " << divide(c, a) << endl;
 }
