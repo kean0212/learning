@@ -1208,6 +1208,42 @@ int divide(int a, int b) {
     return count;
 }
 
+// 7.7
+int calculateKth(int k) {
+    if (k < 0) {
+        return -1;
+    }
+    if (k == 0) {
+        return 1;
+    }
+    
+    queue<int> q3;
+    q3.push(3);
+    queue<int> q5;
+    q5.push(5);
+    queue<int> q7;
+    q7.push(7);
+    
+    int x;
+    while (k > 0) {
+        x = min(q3.front(), min(q5.front(), q7.front()));
+        if (x == q3.front()) {
+            q3.pop();
+            q3.push(3 * x);
+            q5.push(5 * x);
+        } else if (x == q5.front()) {
+            q5.pop();
+            q5.push(5 * x);
+        } else {
+            q7.pop();
+        }
+        q7.push(7 * x);
+        k--;
+    }
+    return x;
+    
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1295,4 +1331,8 @@ int main() {
 //    cout << c << " * " << a << " = " << multiply(c, a) << endl;
 //    cout << a << " / " << c << " = " << divide(a, c) << endl;
 //    cout << c << " / " << a << " = " << divide(c, a) << endl;
+    
+    // test 7.7
+//    int k = 8;
+//    cout << calculateKth(k) << endl;
 }
