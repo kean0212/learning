@@ -1251,6 +1251,26 @@ int calculateKth(int k) {
     
 }
 
+// 9.1
+int countWays(int *array, int n) {
+    if (n < 0) {
+        return 0;
+    }
+    if (n == 0) {
+        return 1;
+    }
+    if (array[n] != 0) {
+        return array[n];
+    }
+    array[n] = countWays(array, n - 1) + countWays(array, n - 2) + countWays(array, n - 3);
+    return array[n];
+}
+
+int countWays(int n) {
+    int *array = new int[n + 1]();
+    return countWays(array, n);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1347,4 +1367,8 @@ int main() {
     // test 7.7
 //    int k = 8;
 //    cout << calculateKth(k) << endl;
+    
+    // test 9.1
+//    int n = 3;
+//    cout << countWays(n) << endl;
 }
