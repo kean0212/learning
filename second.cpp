@@ -1271,6 +1271,36 @@ int countWays(int n) {
     return countWays(array, n);
 }
 
+// 9.2
+int countPaths(int **map, int x, int y) {
+    if (x == 0 && y == 0) {
+        return 1;
+    }
+    if (map[y][x] != 0) {
+        return map[y][x];
+    }
+    int res = 0;
+    if (x > 0) {
+        res += countPaths(map, x - 1, y);
+    }
+    if (y > 0) {
+        res += countPaths(map, x, y - 1);
+    }
+    map[y][x] = res;
+    return res;
+}
+
+int countPaths(int x, int y) {
+    if (x < 0 || y < 0) {
+        return -1;
+    }
+    int **map = new int*[y + 1];
+    for (int i = 0; i <= y; ++i) {
+        map[i] = new int[x + 1]();
+    }
+    return countPaths(map, x, y);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1371,4 +1401,7 @@ int main() {
     // test 9.1
 //    int n = 3;
 //    cout << countWays(n) << endl;
+    
+    // test 9.2
+    cout << countPaths(2, 2) << endl;
 }
