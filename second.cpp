@@ -1208,6 +1208,13 @@ int divide(int a, int b) {
     return count;
 }
 
+// floor to nearest epsilon
+double floorToNearestEpsilon(double d, double epsilon) {
+    int r = (int) (d / epsilon);
+    return ((double) r) * epsilon;
+//    return r;
+}
+
 // 7.7
 int calculateKth(int k) {
     if (k < 0) {
@@ -1331,6 +1338,11 @@ int main() {
 //    cout << c << " * " << a << " = " << multiply(c, a) << endl;
 //    cout << a << " / " << c << " = " << divide(a, c) << endl;
 //    cout << c << " / " << a << " = " << divide(c, a) << endl;
+
+    // test for floor to nearest epsilon
+//    double d = 3.141592653;
+//    double epsilon = 0.0001;
+//    cout << floorToNearestEpsilon(d, epsilon) << endl;
     
     // test 7.7
 //    int k = 8;
