@@ -1325,6 +1325,31 @@ int findMagicIndex(int *array, int n) {
     return findMagicIndex(array, 0, n - 1);
 }
 
+// Follow up
+int findMagicIndexFU(int *array, int start, int end) {
+    if (start > end) {
+        return -1;
+    }
+    int mid = (start + end) / 2;
+    if (array[mid] == mid) {
+        return mid;
+    }
+    int res = -1;
+    res = findMagicIndexFU(array, start, min(array[mid], mid - 1));
+    if (res >= 0) {
+        return res;
+    }
+    res = findMagicIndexFU(array, max(array[mid], mid + 1), end);
+    return res;
+}
+
+int findMagicIndexFU(int *array, int n) {
+    if (array == NULL || n <= 0) {
+        return -1;
+    }
+    return findMagicIndexFU(array, 0, n - 1);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1432,4 +1457,8 @@ int main() {
     // test 9.3
 //    int array[] = {-1, 1, 2, 3, 4, 7, 8};
 //    cout << findMagicIndex(array, 0, 7) << endl;
+    
+    // test 9.3 follow up
+//    int array[] = {-10, -5, 2, 2, 2, 3, 4, 7, 9, 12, 13};
+//    cout << findMagicIndexFU(array, 11) << endl;
 }
