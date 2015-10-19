@@ -1301,6 +1301,30 @@ int countPaths(int x, int y) {
     return countPaths(map, x, y);
 }
 
+// 9.3
+int findMagicIndex(int *array, int start, int end) {
+    if (start > end) {
+        return -1;
+    }
+    int mid = (start + end) / 2;
+    if (mid == array[mid]) {
+        return mid;
+    }
+    if (mid > array[mid]) {
+        return findMagicIndex(array, mid + 1, end);
+    }
+    if (mid < array[mid]) {
+        return findMagicIndex(array, start, mid - 1);
+    }
+}
+
+int findMagicIndex(int *array, int n) {
+    if (array == NULL || n <= 0) {
+        return -1;
+    }
+    return findMagicIndex(array, 0, n - 1);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1403,5 +1427,9 @@ int main() {
 //    cout << countWays(n) << endl;
     
     // test 9.2
-    cout << countPaths(2, 2) << endl;
+//    cout << countPaths(2, 2) << endl;
+    
+    // test 9.3
+//    int array[] = {-1, 1, 2, 3, 4, 7, 8};
+//    cout << findMagicIndex(array, 0, 7) << endl;
 }
