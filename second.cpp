@@ -1371,6 +1371,27 @@ vector<vector<int> > getAllSubsets(vector<int> set) {
     return new_res;
 }
 
+// 9.5
+vector<string> getAllPermutations(string str) {
+    vector<string> allPermutations;
+    if (str.length() == 1) {
+        allPermutations.push_back(str);
+        return allPermutations;
+    }
+    char first_char = str[0];
+    str = str.substr(1);
+    allPermutations = getAllPermutations(str);
+    vector<string> new_allPermutations;
+    for (int i = 0; i < allPermutations.size(); ++i) {
+        for (size_t j = 0; j <= allPermutations[i].length(); ++j) {
+            string temp = allPermutations[i];
+            temp.insert(j, 1, first_char);
+            new_allPermutations.push_back(temp);
+        }
+    }
+    return new_allPermutations;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1484,13 +1505,21 @@ int main() {
 //    cout << findMagicIndexFU(array, 11) << endl;
     
     // test 9.4
-    int array[] = {1, 2, 3, 4};
-    vector<int> vec(array, array + 4);
-    vector<vector<int> > res = getAllSubsets(vec);
-    for (int i = 0; i < res.size(); ++i) {
-        for (int j = 0; j < res[i].size(); ++j) {
-            cout << res[i][j] << " ";
-        }
-        cout << endl;
+//    int array[] = {1, 2, 3, 4};
+//    vector<int> vec(array, array + 4);
+//    vector<vector<int> > res = getAllSubsets(vec);
+//    for (int i = 0; i < res.size(); ++i) {
+//        for (int j = 0; j < res[i].size(); ++j) {
+//            cout << res[i][j] << " ";
+//        }
+//        cout << endl;
+//    }
+    
+    // test 9.5
+    string str = "abcd";
+    vector<string> allPermutations = getAllPermutations(str);
+    for (int i = 0; i < allPermutations.size(); ++i) {
+        cout << allPermutations[i] << " ";
     }
+    cout << endl;
 }
