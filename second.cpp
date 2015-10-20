@@ -1417,8 +1417,7 @@ vector<string> addParens(int n) {
     if (n < 0) {
         return allCombins;
     }
-    string combin(' ', n);
-    cout << combin.length() << endl;
+    string combin(2 * n, ' ');
     addParens(allCombins, combin, n, n, 0);
     return allCombins;
 }
@@ -1555,10 +1554,11 @@ int main() {
 //    cout << endl;
     
     // test 9.6
-//    int n = 3;
-//    vector<string> res = addParens(n);
-//    for (int i = 0; i < res.size(); ++i) {
-//        cout << res[i] << " ";
-//    }
-//    cout << endl;
+    int n = 3;
+    vector<string> res = addParens(n);
+    for (int i = 0; i < res.size(); ++i) {
+        cout << res[i] << " ";
+    }
+    cout << endl;
+    
 }
