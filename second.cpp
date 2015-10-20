@@ -1392,6 +1392,37 @@ vector<string> getAllPermutations(string str) {
     return new_allPermutations;
 }
 
+// 9.6
+void addParens(vector<string> &allCombins, string &combin, int leftRem, int rightRem, int count) {
+    if (leftRem < 0 || leftRem > rightRem) {
+        return;
+    }
+    if (leftRem == 0 && rightRem == 0) {
+        allCombins.push_back(combin);
+        return;
+    }
+    if (leftRem > 0) {
+        combin[count] = '(';
+        addParens(allCombins, combin, leftRem - 1, rightRem, count + 1);
+    }
+    if (leftRem < rightRem) {
+        combin[count] = ')';
+        addParens(allCombins, combin, leftRem, rightRem - 1, count + 1);
+    }
+    return;
+}
+
+vector<string> addParens(int n) {
+    vector<string> allCombins;
+    if (n < 0) {
+        return allCombins;
+    }
+    string combin(' ', n);
+    cout << combin.length() << endl;
+    addParens(allCombins, combin, n, n, 0);
+    return allCombins;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1516,10 +1547,18 @@ int main() {
 //    }
     
     // test 9.5
-    string str = "abcd";
-    vector<string> allPermutations = getAllPermutations(str);
-    for (int i = 0; i < allPermutations.size(); ++i) {
-        cout << allPermutations[i] << " ";
-    }
-    cout << endl;
+//    string str = "abcd";
+//    vector<string> allPermutations = getAllPermutations(str);
+//    for (int i = 0; i < allPermutations.size(); ++i) {
+//        cout << allPermutations[i] << " ";
+//    }
+//    cout << endl;
+    
+    // test 9.6
+//    int n = 3;
+//    vector<string> res = addParens(n);
+//    for (int i = 0; i < res.size(); ++i) {
+//        cout << res[i] << " ";
+//    }
+//    cout << endl;
 }
