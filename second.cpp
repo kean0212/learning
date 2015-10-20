@@ -1350,6 +1350,27 @@ int findMagicIndexFU(int *array, int n) {
     return findMagicIndexFU(array, 0, n - 1);
 }
 
+// 9.4
+// Recursive solution
+vector<vector<int> > getAllSubsets(vector<int> set) {
+    vector<vector<int> > res;
+    if (set.size() == 0) {
+        vector<int> empty_set;
+        res.push_back(empty_set);
+        return res;
+    }
+    int last_element = set.back();
+    set.pop_back();
+    res = getAllSubsets(set);
+    vector<vector<int> > new_res = res;
+    for (int i = 0; i < res.size(); ++i) {
+        vector<int> new_subset = res[i];
+        new_subset.push_back(last_element);
+        new_res.push_back(new_subset);
+    }
+    return new_res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1461,4 +1482,15 @@ int main() {
     // test 9.3 follow up
 //    int array[] = {-10, -5, 2, 2, 2, 3, 4, 7, 9, 12, 13};
 //    cout << findMagicIndexFU(array, 11) << endl;
+    
+    // test 9.4
+    int array[] = {1, 2, 3, 4};
+    vector<int> vec(array, array + 4);
+    vector<vector<int> > res = getAllSubsets(vec);
+    for (int i = 0; i < res.size(); ++i) {
+        for (int j = 0; j < res[i].size(); ++j) {
+            cout << res[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
