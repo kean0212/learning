@@ -1456,6 +1456,36 @@ void paintFill(int **image, int x, int y, Color new_color) {
     paintFill(image, x, y, (Color) image[y][x], new_color);
 }
 
+// 9.8
+int countCombins(int n, int *denoms, int index, int **cache) {
+    if (index == 3) {
+        return 1;
+    }
+    if (cache[n][index] > 0) {
+        return cache[n][index];
+    }
+    int res = 0;
+    int denom = denoms[index];
+    for (int i = 0; i * denom <= n; ++i) {
+        int amount_remain = n - i * denom;
+        res += countCombins(amount_remain, denoms, index + 1, cache);
+    }
+    cache[n][index] = res;
+    return res;
+}
+
+int countCombins(int n) {
+    if (n <= 0) {
+        return 0;
+    }
+    int denoms[] = {25, 10, 5, 1};
+    int **cache = new int*[n + 1];
+    for (int i = 0; i <= n; ++i) {
+        cache[i] = new int[4]();
+    }
+    return countCombins(n, denoms, 0, cache);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1588,11 +1618,15 @@ int main() {
 //    cout << endl;
     
     // test 9.6
-    int n = 3;
-    vector<string> res = addParens(n);
-    for (int i = 0; i < res.size(); ++i) {
-        cout << res[i] << " ";
-    }
-    cout << endl;
+//    int n = 3;
+//    vector<string> res = addParens(n);
+//    for (int i = 0; i < res.size(); ++i) {
+//        cout << res[i] << " ";
+//    }
+//    cout << endl;
+    
+    // 9.8
+//    int n = 6;
+//    cout << countCombins(n) << endl;
     
 }
