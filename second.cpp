@@ -1486,6 +1486,42 @@ int countCombins(int n) {
     return countCombins(n, denoms, 0, cache);
 }
 
+// 9.9
+void printCols(int *cols) {
+    for (int i = 0; i < 8; ++i) {
+        cout << cols[i] << " ";
+    }
+    cout << endl;
+}
+
+bool isRightPos(int *cols, int row, int col) {
+    for (int i = 0; i < row; ++i) {
+        if (cols[i] == col || abs(cols[i] - col) == abs(i - row)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void placeAllQueens(int *cols, int row) {
+    if (row >= 8) {
+        printCols(cols);
+        return;
+    }
+    for (int col = 0; col < 8; ++col) {
+        if (isRightPos(cols, row, col)) {
+            cols[row] = col;
+            placeAllQueens(cols, row + 1);
+        }
+    }
+    return;
+}
+
+void printAllPos() {
+    int *cols = new int[8]();
+    placeAllQueens(cols, 0);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1625,8 +1661,10 @@ int main() {
 //    }
 //    cout << endl;
     
-    // 9.8
+    // test 9.8
 //    int n = 6;
 //    cout << countCombins(n) << endl;
     
+    // test 9.9
+    printAllPos();
 }
