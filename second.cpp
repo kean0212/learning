@@ -1422,6 +1422,40 @@ vector<string> addParens(int n) {
     return allCombins;
 }
 
+// 9.7
+// based on the assumption that all pixels have the same color
+int Image_Width, Image_Height;
+
+enum Color {
+    Black,
+    White,
+    Red,
+    Yellow,
+    Green
+};
+
+void paintFill(int **image, int x, int y, Color old_color, Color new_color) {
+    if (x < 0 || x >= Image_Width ||
+        y < 0 || y >= Image_Height) {
+        return;
+    }
+    if (image[y][x] == (int) old_color) {
+        image[y][x] = (int) new_color;
+        paintFill(image, x - 1, y, old_color, new_color);
+        paintFill(image, x + 1, y, old_color, new_color);
+        paintFill(image, x, y - 1, old_color, new_color);
+        paintFill(image, x, y + 1, old_color, new_color);
+        return;
+    }
+}
+
+void paintFill(int **image, int x, int y, Color new_color) {
+    if (image[y][x] == new_color) {
+        return;
+    }
+    paintFill(image, x, y, (Color) image[y][x], new_color);
+}
+
 // main function
 int main() {
     // test 1.1
