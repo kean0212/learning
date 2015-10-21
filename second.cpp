@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 #include <stack>
 #include <cmath>
 #include <queue>
@@ -1520,6 +1521,38 @@ void placeAllQueens(int *cols, int row) {
 void printAllPos() {
     int *cols = new int[8]();
     placeAllQueens(cols, 0);
+}
+
+// 9.10
+struct Box {
+    int width;
+    int height;
+    int depth;
+};
+
+bool isAbovable(Box top, Box bottom) {
+    return top.width < bottom.width && top.height < bottom.height && top.depth < bottom.depth;
+}
+
+vector<Box> createStack(vector<Box> boxes, int bottom, unordered_map<int, vector<Box> > &cache) {
+    if (cache.count(bottom) != 0) {
+        return cache[bottom];
+    }
+    int max_height = 0;
+    vector<Box> max_stack;
+    for (int i = 0; i < boxes.size(); ++i) {
+        if (isAbovable(boxes[i], boxes[bottom])) {
+            vector<Box> above_stack = createStack(boxes, i, cache);
+            int above_height = above_stack.size();
+            if (above_height > max_height) {
+                max_height = above_height;
+                max_stack = above_stack;
+            }
+        }
+    }
+    max_stack.push_back(boxes[bottom]);
+    cache[bottom] = max_stack;
+    return max_stack;
 }
 
 // main function
