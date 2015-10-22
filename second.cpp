@@ -1555,6 +1555,27 @@ vector<Box> createStack(vector<Box> boxes, int bottom, unordered_map<int, vector
     return max_stack;
 }
 
+// compute factorial of n
+int computeFactorial(int n, int *results) {
+    if (n == 1) {
+        return 1;
+    }
+    if (results[n] != 0) {
+        return results[n];
+    }
+    int res = n * computeFactorial(n - 1, results);
+    results[n] = res;
+    return res;
+}
+
+int computeFactorial(int n) {
+    if (n <= 0) {
+        return -1;
+    }
+    int *results = new int[n + 1]();
+    return computeFactorial(n, results);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1699,5 +1720,8 @@ int main() {
 //    cout << countCombins(n) << endl;
     
     // test 9.9
-    printAllPos();
+//    printAllPos();
+    
+    // test the function for compute factorial of n
+//    cout << computeFactorial(5) << endl;
 }
