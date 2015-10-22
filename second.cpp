@@ -1576,6 +1576,63 @@ int computeFactorial(int n) {
     return computeFactorial(n, results);
 }
 
+// 9.11
+int total(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return computeFactorial(2 * n) / (computeFactorial(n + 1) * computeFactorial(n));
+}
+
+int countParenWays(string exp, int result, int s, int e, unordered_map<string, int> &cache) {
+    string key = exp.substr(s, e - s + 1);
+    int c = 0;
+    if (cache.count(key) != 0) {
+        c = cache[key];
+    } else {
+        if (s == e) {
+            if (exp[s] == '1') {
+                c = 1;
+            } else {
+                c = 0;
+            }
+        }
+        for (int i = s + 1; i <= e; i += 2) {
+            char op = exp[i];
+            if (op == '&') {
+//                cout << "&" << endl;
+                c += countParenWays(exp, 1, s, i - 1, cache) * countParenWays(exp, 1, i + 1, e, cache);
+            } else if (op == '|') {
+//                cout << "|" << endl;
+                int left_ops = (i - 1 - s) / 2;
+                int right_ops = (e - i - 1) / 2;
+                int total_ways = total(left_ops) * total(right_ops);
+                int total_false = countParenWays(exp, 0, s, i - 1, cache) * countParenWays(exp, 0, i + 1, e, cache);
+                c += total_ways - total_false;
+            } else {
+//                cout << "^1" << endl;
+                c += countParenWays(exp, 0, s, i - 1, cache) * countParenWays(exp, 1, i + 1, e, cache);
+//                cout << "^2" << endl;
+                c += countParenWays(exp, 1, s, i - 1, cache) * countParenWays(exp, 0, i + 1, e, cache);
+            }
+        }
+        cache[key] = c;
+    }
+    if (result) {
+        return c;
+    } else {
+        return total((e - s) / 2) - c;
+    }
+}
+
+int countParenWays(string exp, int result) {
+    if (exp.length() <= 3) {
+        return 0;
+    }
+    unordered_map<string, int> cache;
+    return countParenWays(exp, result, 0, exp.length() - 1, cache);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1724,4 +1781,8 @@ int main() {
     
     // test the function for compute factorial of n
 //    cout << computeFactorial(5) << endl;
+    
+    // test 9.11
+    string exp = "1^0|0|1";
+    cout << countParenWays(exp, 0) << endl;
 }
