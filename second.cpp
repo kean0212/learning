@@ -1633,6 +1633,24 @@ int countParenWays(string exp, int result) {
     return countParenWays(exp, result, 0, exp.length() - 1, cache);
 }
 
+// 11.1
+void mergeSortedArrays(int *a1, int l1, int *a2, int l2) {
+    int i = l1 - 1;
+    int j = l2 - 1;
+    for (int k = l1 + l2 - 1; k >= 0; --k) {
+        if (j < 0) {
+            break;
+        }
+        if (i >= 0 && a1[i] > a2[j]) {
+            a1[k] = a1[i];
+            i--;
+        } else {
+            a1[k] = a2[j];
+            j--;
+        }
+    }
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1783,6 +1801,15 @@ int main() {
 //    cout << computeFactorial(5) << endl;
     
     // test 9.11
-    string exp = "1^0|0|1";
-    cout << countParenWays(exp, 0) << endl;
+//    string exp = "1^0|0|1";
+//    cout << countParenWays(exp, 0) << endl;
+
+    // test 11.1
+    int a1[8] = {1, 3, 6, 10};
+    int a2[3] = {2, 4, 5};
+    mergeSortedArrays(a1, 4, a2, 3);
+    for (int i = 0; i < 7; ++i) {
+        cout << a1[i] << " ";
+    }
+    cout << endl;
 }
