@@ -1651,6 +1651,27 @@ void mergeSortedArrays(int *a1, int l1, int *a2, int l2) {
     }
 }
 
+// 11.2
+vector<string> sortStrings(vector<string> strs) {
+    unordered_map<string, vector<string> > hash_table;
+    for (int i = 0; i < strs.size(); ++i) {
+        string sorted_str = strs[i];
+        sort(sorted_str.begin(), sorted_str.end());
+        if (hash_table.count(sorted_str) == 0) {
+            vector<string> anagrams;
+            hash_table[sorted_str] = anagrams;
+        }
+        hash_table[sorted_str].push_back(strs[i]);
+    }
+    strs.clear();
+    for (auto it = hash_table.begin(); it != hash_table.end(); ++it) {
+        for (int i = 0; i < it->second.size(); ++i) {
+            strs.push_back(it->second[i]);
+        }
+    }
+    return strs;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1805,11 +1826,20 @@ int main() {
 //    cout << countParenWays(exp, 0) << endl;
 
     // test 11.1
-    int a1[8] = {1, 3, 6, 10};
-    int a2[3] = {2, 4, 5};
-    mergeSortedArrays(a1, 4, a2, 3);
-    for (int i = 0; i < 7; ++i) {
-        cout << a1[i] << " ";
-    }
-    cout << endl;
+//    int a1[8] = {1, 3, 6, 10};
+//    int a2[3] = {2, 4, 5};
+//    mergeSortedArrays(a1, 4, a2, 3);
+//    for (int i = 0; i < 7; ++i) {
+//        cout << a1[i] << " ";
+//    }
+//    cout << endl;
+
+    // test 11.2
+//    string str_array[] = {"hello", "world", "its", "qifan", "ollhe", "dorlw"};
+//    vector<string> str_vec(str_array, str_array + 6);
+//    str_vec = sortStrings(str_vec);
+//    for (int i = 0; i < str_vec.size(); ++i) {
+//        cout << str_vec[i] << " ";
+//    }
+//    cout << endl;
 }
