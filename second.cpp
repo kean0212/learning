@@ -1672,6 +1672,42 @@ vector<string> sortStrings(vector<string> strs) {
     return strs;
 }
 
+// 11.3
+int search(vector<int> vec, int low, int high, int n) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (vec[mid] == n) {
+        return mid;
+    }
+    if (vec[low] < vec[mid]) {
+        if (n >= vec[low] && n <= vec[mid]) {
+            return search(vec, low, mid - 1, n);
+        }
+        return search(vec, mid + 1, high, n);
+    } else if (vec[low] > vec[mid]) {
+        if (n >= vec[mid] && n <= vec[high]) {
+            return search(vec, mid + 1, high, n);
+        }
+        return search(vec, low, mid - 1, n);
+    } else if (vec[low] == vec[mid]) {
+        if (vec[high] != vec[mid]) {
+            return search(vec, mid + 1, high, n);
+        } else {
+            int res = search(vec, low, mid - 1, n);
+            if (res != -1) {
+                return res;
+            }
+            return search(vec, mid + 1, high, n);
+        }
+    }
+}
+
+int search(vector<int> vec, int n) {
+    return search(vec, 0, vec.size() - 1, n);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1842,4 +1878,9 @@ int main() {
 //        cout << str_vec[i] << " ";
 //    }
 //    cout << endl;
+    
+    // test 11.3
+//    int array[] = {3, 6, 8, 10, 1, 2};
+//    vector<int> vec(array, array + 6);
+//    cout << search(vec, 1) << endl;
 }
