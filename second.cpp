@@ -1708,6 +1708,38 @@ int search(vector<int> vec, int n) {
     return search(vec, 0, vec.size() - 1, n);
 }
 
+// 11.4
+int search(string strs[], int low, int high, string str) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (strs[mid] == "") {
+        int left = mid - 1;
+        int right = mid + 1;
+        while (true) {
+            if (left < low && right > high) {
+                return -1;
+            } else if (left >= low && strs[left] != "") {
+                mid = left;
+                break;
+            } else if (right <= high && strs[right] != "") {
+                mid = right;
+                break;
+            }
+            left--;
+            right++;
+        }
+    }
+    if (strs[mid] == str) {
+        return mid;
+    } else if (strs[mid] < str) {
+        return search(strs, mid + 1, high, str);
+    } else {
+        return search(strs, high, mid - 1, str);
+    }
+}
+
 // main function
 int main() {
     // test 1.1
@@ -1883,4 +1915,8 @@ int main() {
 //    int array[] = {3, 6, 8, 10, 1, 2};
 //    vector<int> vec(array, array + 6);
 //    cout << search(vec, 1) << endl;
+    
+    // test 11.4
+//    string strs[] = {"", "", "", "", "", "abd", "", "", "", "", "", "", ""};
+//    cout << search(strs, 0, 12, "abd") << endl;
 }
