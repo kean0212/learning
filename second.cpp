@@ -1757,27 +1757,32 @@ ostream& operator<<(ostream &out, Person p) {
     return out << "(" << p.height << ", " << p.weight << ")";
 }
 
-vector<Person> buildLargestTower(vector<Person> people, Person p) {
+vector<Person> buildLargestTower(vector<Person> people, int index, unordered_map<int, vector<Person> > &cache) {
+    if (cache.count(index) != 0) {
+        return cache[index];
+    }
     vector<Person> max_tower, above_tower;
     int max_people = 0;
     for (int i = 0; i < people.size(); ++i) {
-        if (people[i] < p) {
-            above_tower = buildLargestTower(people, people[i]);
+        if (people[i] < people[index]) {
+            above_tower = buildLargestTower(people, i, cache);
             if (above_tower.size() > max_people) {
                 max_tower = above_tower;
                 max_people = above_tower.size();
             }
         }
     }
-    max_tower.push_back(p);
+    max_tower.push_back(people[index]);
+    cache[index] = max_tower;
     return max_tower;
 }
 
 vector<Person> buildLargestTower(vector<Person> people) {
     vector<Person> max_tower, tower;
     int max_people = 0;
+    unordered_map<int, vector<Person> > cache;
     for (int i = 0; i < people.size(); ++i) {
-        tower = buildLargestTower(people, people[i]);
+        tower = buildLargestTower(people, i, cache);
         if (tower.size() > max_people) {
             max_tower = tower;
             max_people = tower.size();
