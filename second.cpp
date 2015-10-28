@@ -1791,6 +1791,70 @@ vector<Person> buildLargestTower(vector<Person> people) {
     return max_tower;
 }
 
+// 11.8
+class Question_11_8_Node {
+    int data;
+    int left_size;
+    Question_11_8_Node *left;
+    Question_11_8_Node *right;
+    
+public:
+    Question_11_8_Node(int d, int ls = 0) {
+        this->data = d;
+        this->left_size = ls;
+    }
+    void insert(int x) {
+        if (x < this->data) {
+            if (this->left == NULL) {
+                this->left = new Question_11_8_Node(x);
+            } else {
+                this->left->insert(x);
+            }
+        } else {
+            if (this->right == NULL) {
+                this->right = new Question_11_8_Node(x);
+            } else {
+                this->right->insert(x);
+            }
+        }
+    }
+    int getRank(int x) {
+        if (this->data == x) {
+            return this->left_size;
+        } else if (x <= this->data) {
+            if (this->left == NULL) {
+                return -1;
+            }
+            return this->left->getRank(x);
+        } else {
+            if (this->right == NULL) {
+                return -1;
+            }
+            int right_rank = this->right->getRank(x);
+            if (right_rank == -1) {
+                return -1;
+            }
+            return this->left_size + 1 + this->right->getRank(x);
+        }
+    }
+};
+
+class Question_11_8 {
+    Question_11_8_Node *root = NULL;
+    
+public:
+    void track(int x) {
+        if (root == NULL) {
+            root = new Question_11_8_Node(x);
+        } else {
+            root->insert(x);
+        }
+    }
+    int getRankOfNumber(int x) {
+        return root->getRank(x);
+    }
+};
+
 // main function
 int main() {
     // test 1.1
@@ -1973,8 +2037,8 @@ int main() {
     
     // test 11.7
     Person people_array[] = {Person(65, 100), Person(70, 150), Person(56, 90),
-                             Person(75, 190), Person(60, 95), Person(68, 110)};
-    vector<Person> people_vec(people_array, people_array + 6);
+                             Person(75, 190), Person(60, 95), Person(68, 110), Person(72, 180)};
+    vector<Person> people_vec(people_array, people_array + 7);
     vector<Person> res = buildLargestTower(people_vec);
     cout << res.size() << endl;
     for (int i = 0; i < res.size(); ++i) {
