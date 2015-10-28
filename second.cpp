@@ -17,6 +17,7 @@
 #include <vector>
 #include <list>
 #include <limits>
+#include <fstream>
 
 using namespace std;
 
@@ -1855,6 +1856,25 @@ public:
     }
 };
 
+// 13.1
+void printLastKLines(char *fileName, int k) {
+    ifstream infile(fileName);
+    string *strs = new string[k];
+    int offset = 0;
+    
+    string line;
+    while (getline(infile, line)) {
+        strs[offset % k] = line;
+        offset++;
+    }
+    
+    int start = offset > k ? offset % k : 0;
+    int count = min(k, offset);
+    for (int i = 0; i < count; ++i) {
+        cout << strs[(start + i) % k] << endl;
+    }
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2036,12 +2056,23 @@ int main() {
 //    cout << search(strs, 0, 12, "abd") << endl;
     
     // test 11.7
-    Person people_array[] = {Person(65, 100), Person(70, 150), Person(56, 90),
-                             Person(75, 190), Person(60, 95), Person(68, 110), Person(72, 180)};
-    vector<Person> people_vec(people_array, people_array + 7);
-    vector<Person> res = buildLargestTower(people_vec);
-    cout << res.size() << endl;
-    for (int i = 0; i < res.size(); ++i) {
-        cout << res[i] << endl;
-    }
+//    Person people_array[] = {Person(65, 100), Person(70, 150), Person(56, 90),
+//                             Person(75, 190), Person(60, 95), Person(68, 110), Person(72, 180)};
+//    vector<Person> people_vec(people_array, people_array + 7);
+//    vector<Person> res = buildLargestTower(people_vec);
+//    cout << res.size() << endl;
+//    for (int i = 0; i < res.size(); ++i) {
+//        cout << res[i] << endl;
+//    }
+
+    // test for reference
+//    int a = 2;
+//    int b = 3;
+//    int &ra = a;
+//    ra = b;
+//    cout << a << endl;
+    
+    // test 13.1
+//    char fileName[] = "first.cpp";
+//    printLastKLines(fileName, 4);
 }
