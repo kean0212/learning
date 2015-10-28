@@ -1708,7 +1708,7 @@ int search(vector<int> vec, int n) {
     return search(vec, 0, vec.size() - 1, n);
 }
 
-// 11.4
+// 11.5
 int search(string strs[], int low, int high, string str) {
     if (low > high) {
         return -1;
@@ -1738,6 +1738,52 @@ int search(string strs[], int low, int high, string str) {
     } else {
         return search(strs, high, mid - 1, str);
     }
+}
+
+// 11.7 using recursion
+struct Person {
+    int height;
+    int weight;
+    Person(int h, int w) {
+        this->height = h;
+        this->weight = w;
+    }
+    bool operator<(const Person& p) {
+        return this->height < p.height && this->weight < p.weight;
+    }
+};
+
+ostream& operator<<(ostream &out, Person p) {
+    return out << "(" << p.height << ", " << p.weight << ")";
+}
+
+vector<Person> buildLargestTower(vector<Person> people, Person p) {
+    vector<Person> max_tower, above_tower;
+    int max_people = 0;
+    for (int i = 0; i < people.size(); ++i) {
+        if (people[i] < p) {
+            above_tower = buildLargestTower(people, people[i]);
+            if (above_tower.size() > max_people) {
+                max_tower = above_tower;
+                max_people = above_tower.size();
+            }
+        }
+    }
+    max_tower.push_back(p);
+    return max_tower;
+}
+
+vector<Person> buildLargestTower(vector<Person> people) {
+    vector<Person> max_tower, tower;
+    int max_people = 0;
+    for (int i = 0; i < people.size(); ++i) {
+        tower = buildLargestTower(people, people[i]);
+        if (tower.size() > max_people) {
+            max_tower = tower;
+            max_people = tower.size();
+        }
+    }
+    return max_tower;
 }
 
 // main function
@@ -1919,4 +1965,14 @@ int main() {
     // test 11.5
 //    string strs[] = {"", "", "", "", "", "abd", "", "", "", "", "", "", ""};
 //    cout << search(strs, 0, 12, "abd") << endl;
+    
+    // test 11.7
+    Person people_array[] = {Person(65, 100), Person(70, 150), Person(56, 90),
+                             Person(75, 190), Person(60, 95), Person(68, 110)};
+    vector<Person> people_vec(people_array, people_array + 6);
+    vector<Person> res = buildLargestTower(people_vec);
+    cout << res.size() << endl;
+    for (int i = 0; i < res.size(); ++i) {
+        cout << res[i] << endl;
+    }
 }
