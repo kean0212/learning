@@ -1925,26 +1925,30 @@ bool canWinNim(int n) {
 }
 
 // Word Pattern
-char updatePattern(string &pattern) {
-    char res = pattern[0];
-    pattern = pattern.substr(1);
-    return res;
-}
-string updateStr(string &str) {
-    size_t pos = str.find_first_of("");
-    string res = str.substr(0, pos);
-    str = str.substr(pos + 1);
-    return res;
+vector<string> split(string str) {
+    vector<string> tokens;
+    size_t pos;
+    while ((pos = str.find_first_of(" ")) != string::npos) {
+        tokens.push_back(str.substr(0, pos));
+        str = str.substr(pos + 1);
+    }
+    tokens.push_back(str);
+    return tokens;
 }
 
 bool wordPattern(string pattern, string str) {
+    vector<string> tokens = split(str);
+    if (tokens.size() != pattern.length()) {
+        return false;
+    }
+    
     unordered_map<char, string> hash_table_1;
     unordered_map<string, char> hash_table_2;
     char c;
     string s;
     for (int i = 0; i < pattern.length(); ++i) {
-        c = updatePattern(pattern);
-        s = updateStr(str);
+        c = pattern[i];
+        s = tokens[i];
         if (hash_table_1.count(c) == 0) {
             hash_table_1[c] = s;
         } else {
@@ -1960,9 +1964,7 @@ bool wordPattern(string pattern, string str) {
             }
         }
     }
-    if(!(str == "" && pattern == "")) {
-        return false;
-    }
+
     return true;
 }
 
@@ -2168,5 +2170,10 @@ int main() {
 //    printLastKLines(fileName, 4);
     
     // test Nim Game
-    cout << canWinNim(9) << endl;
+//    cout << canWinNim(9) << endl;
+    
+    // test Word Pattern
+    string pattern = "abba";
+    string str = "dog dog dog dog";
+    cout << wordPattern(pattern, str) << endl;
 }
