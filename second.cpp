@@ -11,6 +11,7 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <map>
 #include <stack>
 #include <cmath>
 #include <queue>
@@ -1873,6 +1874,27 @@ void printLastKLines(char *fileName, int k) {
     for (int i = 0; i < count; ++i) {
         cout << strs[(start + i) % k] << endl;
     }
+}
+
+// 13.7
+typedef map<TreeNode*, TreeNode*> NodeMap;
+
+TreeNode *recursiveCopy(TreeNode *cur, NodeMap &node_map) {
+    if (cur == NULL) {
+        return NULL;
+    }
+    if (node_map.count(cur) != 0) {
+        return node_map[cur];
+    }
+    TreeNode *new_node = new TreeNode;
+    new_node->left = recursiveCopy(cur->left, node_map);
+    new_node->right = recursiveCopy(cur->right, node_map);
+    return new_node;
+}
+
+TreeNode *copy(TreeNode *root) {
+    NodeMap node_map;
+    return recursiveCopy(root, node_map);
 }
 
 // main function
