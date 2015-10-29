@@ -1897,6 +1897,75 @@ TreeNode *copy(TreeNode *root) {
     return recursiveCopy(root, node_map);
 }
 
+// Nim Game
+bool canWinNim(int n, int count, unordered_map<int, bool> &cache) {
+    if (cache.count(n) != 0) {
+        return cache[n];
+    }
+    if (n <= 3) {
+        if (count / 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    bool res = canWinNim(n - 1, count + 1, cache) |
+               canWinNim(n - 2, count + 1, cache) |
+               canWinNim(n - 3, count + 1, cache);
+    cache[n] = res;
+    return res;
+}
+
+bool canWinNim(int n) {
+    if (n < 0) {
+        return false;
+    }
+    unordered_map<int, bool> cache;
+    return canWinNim(n, 0, cache);
+}
+
+// Word Pattern
+char updatePattern(string &pattern) {
+    char res = pattern[0];
+    pattern = pattern.substr(1);
+    return res;
+}
+string updateStr(string &str) {
+    size_t pos = str.find_first_of("");
+    string res = str.substr(0, pos);
+    str = str.substr(pos + 1);
+    return res;
+}
+
+bool wordPattern(string pattern, string str) {
+    unordered_map<char, string> hash_table_1;
+    unordered_map<string, char> hash_table_2;
+    char c;
+    string s;
+    for (int i = 0; i < pattern.length(); ++i) {
+        c = updatePattern(pattern);
+        s = updateStr(str);
+        if (hash_table_1.count(c) == 0) {
+            hash_table_1[c] = s;
+        } else {
+            if (s != hash_table_1[c]) {
+                return false;
+            }
+        }
+        if (hash_table_2.count(s) == 0) {
+            hash_table_2[s] = c;
+        } else {
+            if (c != hash_table_2[s]) {
+                return false;
+            }
+        }
+    }
+    if(!(str == "" && pattern == "")) {
+        return false;
+    }
+    return true;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2097,4 +2166,7 @@ int main() {
     // test 13.1
 //    char fileName[] = "first.cpp";
 //    printLastKLines(fileName, 4);
+    
+    // test Nim Game
+    cout << canWinNim(9) << endl;
 }
