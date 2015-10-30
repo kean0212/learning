@@ -1991,6 +1991,58 @@ int climbStairs(int n) {
     return res;
 }
 
+// Implement Queue using stacks
+class Queue {
+    stack<int> s1;
+    stack<int> s2;
+    
+    // Transmit n elements from stack1 to stack 2
+    void transmit(stack<int> &s1, stack<int> &s2, int n) {
+        for (int i = 0; i < n; ++i) {
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+public:
+    // Push element x to the back of queue.
+    void push(int x) {
+        s1.empty() ? s2.push(x) : s1.push(x);
+    }
+    
+    // Removes the element from in front of queue.
+    void pop(void) {
+        if (s1.empty()) {
+            transmit(s1, s2, s2.size() - 1);
+            s2.pop();
+            transmit(s2, s1, s1.size());
+        } else {
+            transmit(s2, s1, s1.size() - 1);
+            s1.pop();
+            transmit(s1, s2, s2.size());
+        }
+    }
+    
+    // Get the front element.
+    int peek(void) {
+        int res;
+        if (s1.empty()) {
+            transmit(s1, s2, s2.size() - 1);
+            res = s2.top();
+            transmit(s2, s1, s1.size());
+        } else {
+            transmit(s2, s1, s1.size() - 1);
+            res = s1.top();
+            transmit(s1, s2, s2.size());
+        }
+        return res;
+    }
+    
+    // Return whether the queue is empty.
+    bool empty(void) {
+        return s1.empty() && s2.empty();
+    }
+};
+
 // main function
 int main() {
     // test 1.1
