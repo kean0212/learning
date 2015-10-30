@@ -1968,6 +1968,29 @@ bool wordPattern(string pattern, string str) {
     return true;
 }
 
+// Climb Stairs
+int climbStairs(int n, int *cache) {
+    int res = 0;
+    if (n < 0) {
+        return 0;
+    }
+    if (cache[n] != 0) {
+        return cache[n];
+    }
+    if (n == 0) {
+        return 1;
+    }
+    res = climbStairs(n - 1, cache) + climbStairs(n - 2, cache);
+    cache[n] = res;
+    return res;
+}
+int climbStairs(int n) {
+    int *cache = new int[n + 1]();
+    int res = climbStairs(n, cache);
+    delete cache;
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2173,7 +2196,13 @@ int main() {
 //    cout << canWinNim(9) << endl;
     
     // test Word Pattern
-    string pattern = "abba";
-    string str = "dog dog dog dog";
-    cout << wordPattern(pattern, str) << endl;
+//    string pattern = "abba";
+//    string str = "dog dog dog dog";
+//    cout << wordPattern(pattern, str) << endl;
+
+    // test Climb Stairs
+//    int n = 1;
+//    cout << climbStairs(n) << endl;
+
+   
 }
