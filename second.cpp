@@ -2043,6 +2043,19 @@ public:
     }
 };
 
+// Rob Houses
+int rob(vector<int>& nums) {
+    int prev = 0;
+    int cur = 0;
+    int temp = 0;
+    for (int i = 0; i < nums.size(); ++i) {
+        temp = max(prev + nums[i], cur);
+        prev = cur;
+        cur = temp;
+    }
+    return temp;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2256,5 +2269,8 @@ int main() {
 //    int n = 1;
 //    cout << climbStairs(n) << endl;
 
-   
+    // test Rob Houses
+    int houses[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    vector<int> nums(houses, houses + sizeof(houses) / sizeof(int));
+    cout << rob(nums) << endl;
 }
