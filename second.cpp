@@ -2093,6 +2093,60 @@ void swapInPlace(int *a, int *b) {
     *a = *a - *b;
 }
 
+// 17.2 - Assume that it's NxN, 0 for empty, -1 for A, and 1 for B
+int hasWon(int **board, int N) {
+    int i = 0;
+    int j = 0;
+    // check horizontally
+    for (i = 0; i < N; ++i) {
+        if (board[i][0] != 0) {
+            for (j = 1; j < N; ++j) {
+                if (board[i][j] != board[i][j - 1]) {
+                    break;
+                }
+            }
+            if (j == N) {
+                return board[i][0];
+            }
+        }
+    }
+    // check vertically
+    for (i = 0; i < N; ++i) {
+        if (board[0][i] != 0) {
+            for (j = 1; j < N; ++j) {
+                if (board[j][i] != board[j - 1][i]) {
+                    break;
+                }
+            }
+            if (j == N) {
+                return board[0][i];
+            }
+        }
+    }
+    // check diagonally
+    if (board[0][0] != 0) {
+        for (i = 1; i < N; ++i) {
+            if (board[i][i] != board[i - 1][i - 1]) {
+                break;
+            }
+        }
+        if (i == N) {
+            return board[0][0];
+        }
+    }
+    if (board[0][N - 1] != 0) {
+        for (i = 1; i < N; ++i) {
+            if (board[i][N - 1 - i] != board[i - 1][N - 1 - (i - 1)]) {
+                break;
+            }
+        }
+        if (i == N) {
+            return board[0][N - 1];
+        }
+    }
+    return 0;
+}
+
 // main function
 int main() {
     // test 1.1
