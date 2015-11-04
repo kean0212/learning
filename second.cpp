@@ -2086,6 +2086,13 @@ int **my2DAlloc(int rows, int cols) {
     return p;
 }
 
+// 17.1
+void swapInPlace(int *a, int *b) {
+    *a = *a + *b;
+    *b = *a - *b;
+    *a = *a - *b;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2306,4 +2313,11 @@ int main() {
     
     // test 13.9
 //    cout << (size_t)align_malloc(1000, 128) / 128 << endl;
+    
+    // test 17.1
+//    int a  = 3;
+//    int b = 1;
+//    swapInPlace(&a, &b);
+//    cout << a << endl;
+//    cout << b << endl;
 }
