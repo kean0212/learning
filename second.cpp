@@ -2073,6 +2073,19 @@ void align_free(void *p2) {
     free(p1);
 }
 
+// 13.10
+int **my2DAlloc(int rows, int cols) {
+    int **p = (int **) malloc(rows * sizeof(int*) + rows * cols * sizeof(int));
+    if (p == NULL) {
+        return NULL;
+    }
+    int *buf = (int *)(p + rows);
+    for (int i = 0; i < rows; ++i) {
+        p[i] = buf + i * cols;
+    }
+    return p;
+}
+
 // main function
 int main() {
     // test 1.1
