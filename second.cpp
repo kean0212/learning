@@ -2056,6 +2056,23 @@ int rob(vector<int>& nums) {
     return temp;
 }
 
+// 13.9
+void *align_malloc(int size, size_t alignment) {
+    void *p1;
+    void **p2;
+    if ((p1 = malloc(size + alignment - 1 + sizeof(void *))) == NULL) {
+        return NULL;
+    }
+    p2 = (void **)((size_t) p1 + alignment & (~(alignment - 1)));
+    p2[-1] = p1;
+    return p2;
+}
+
+void align_free(void *p2) {
+    void *p1 = ((void **)p2)[-1];
+    free(p1);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2270,7 +2287,10 @@ int main() {
 //    cout << climbStairs(n) << endl;
 
     // test Rob Houses
-    int houses[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    vector<int> nums(houses, houses + sizeof(houses) / sizeof(int));
-    cout << rob(nums) << endl;
+//    int houses[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+//    vector<int> nums(houses, houses + sizeof(houses) / sizeof(int));
+//    cout << rob(nums) << endl;
+    
+    // test 13.9
+//    cout << (size_t)align_malloc(1000, 128) / 128 << endl;
 }
