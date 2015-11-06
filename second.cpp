@@ -2147,6 +2147,19 @@ int hasWon(int **board, int N) {
     return 0;
 }
 
+// 17.3
+int countTrailingZeros(int n) {
+    if (n < 0) {
+        return -1;
+    }
+    int count = 0;
+    while (n / 5 != 0) {
+        count += n / 5;
+        n /= 5;
+    }
+    return count;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2374,4 +2387,8 @@ int main() {
 //    swapInPlace(&a, &b);
 //    cout << a << endl;
 //    cout << b << endl;
+    
+    // test 17.3
+//    int n = 6;
+//    cout << countTrailingZeros(n) << endl;
 }
