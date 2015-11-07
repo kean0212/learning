@@ -2160,6 +2160,28 @@ int countTrailingZeros(int n) {
     return count;
 }
 
+// 17.4
+int sign(int a) {
+    return (a >> (sizeof(int) * 8 - 1)) & 1;
+}
+
+int flip(int a) { // a can only be 0 or 1
+    return a ^ 1;
+}
+
+int specialMax(int a, int b) {
+    int c = a - b;
+    int sign_of_a = sign(a);
+    int sign_of_b = sign(b);
+    int sign_of_c = sign(c);
+    
+    int use_sign_of_a = sign_of_a ^ sign_of_b;
+    int use_sign_of_c = flip(use_sign_of_a);
+    
+    int k = use_sign_of_a * flip(sign_of_a) + use_sign_of_c * flip(sign_of_c);
+    return k * a + flip(k) * b;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2391,4 +2413,9 @@ int main() {
     // test 17.3
 //    int n = 6;
 //    cout << countTrailingZeros(n) << endl;
+    
+    // test 17.4
+//    int a = -15;
+//    int b = -3;
+//    cout << specialMax(a, b) << endl;
 }
