@@ -2285,6 +2285,54 @@ void findMthroughN(int *array, int n) {
     cout << M << " through " << N << endl;
 }
 
+// 17.7
+string thousands[] = {"Billion", "Million", "Thousand", ""};
+string tens[] = {"Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+string teens[] = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+    "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+string ones[] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+
+string print3Digits(int n) {
+    string res = "";
+    if (n >= 100) {
+        res += ones[n / 100 - 1] + " Hundred" + (n % 100 != 0 ? " " : "");
+        n %= 100;
+    }
+    if (n >= 20) {
+        res += tens[(n - 20) / 10] + (n % 10 != 0 ? " " : "");
+        n %= 10;
+    }
+    if (n >= 10 && n < 20) {
+        res += teens[n - 10] + " ";
+        return res;
+    }
+    if (n >= 1 && n < 10) {
+        res += ones[n - 1];
+    }
+    return res;
+}
+
+string printEnglish(int n) {
+    string res = "";
+    if (n == 0) {
+        res = "Zero";
+        return res;
+    }
+    if (n < 0) {
+        res += "Negative ";
+        n = -n;
+    }
+    int fractor = 1000000000;
+    int index = 0;
+    while (index < 4) {
+        res += print3Digits(n / fractor) + (n / fractor != 0 && index != 3 ? thousands[index] + ", " : "");
+        n %= fractor;
+        fractor /= 1000;
+        index++;
+    }
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2529,8 +2577,12 @@ int main() {
 //    cout << res.hits << endl;
 //    cout << res.pseudo_hits << endl;
     
-    // 17.6
+    // test 17.6
 //    int array[] = {1, 2, 8, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19};
 //    int n = 14;
 //    findMthroughN(array, n);
+    
+    // test 17.7
+    int n = -12213109;
+    cout << printEnglish(n) << endl;
 }
