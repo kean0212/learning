@@ -2182,6 +2182,41 @@ int specialMax(int a, int b) {
     return k * a + flip(k) * b;
 }
 
+// 17.5
+struct Result_17_5 {
+    int hits;
+    int pseudo_hits;
+    Result_17_5 (int h, int p) {
+        hits = h;
+        pseudo_hits = p;
+    }
+};
+
+Result_17_5 count(string guess, string solution) {
+    Result_17_5 res(0, 0);
+    if (guess.length() != 4 || solution.length() != 4) {
+        return res;
+    }
+    unordered_map<char, int> hash_table;
+    hash_table['R'] = 0;
+    hash_table['Y'] = 0;
+    hash_table['G'] = 0;
+    hash_table['B'] = 0;
+    for (int i = 0; i < 4; ++i) {
+        if (guess[i] == solution[i]) {
+            res.hits++;
+        } else {
+            hash_table[guess[i]]++;
+            hash_table[solution[i]]--;
+        }
+    }
+    res.pseudo_hits = 4 - res.hits;
+    for (auto it = hash_table.begin(); it != hash_table.end(); ++it) {
+        it->second < 0 ? res.pseudo_hits += it->second : NULL;
+    }
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2418,4 +2453,11 @@ int main() {
 //    int a = -15;
 //    int b = -3;
 //    cout << specialMax(a, b) << endl;
+    
+    // test 17.5
+    string guess = "GGRR";
+    string solution = "RGBY";
+    Result_17_5 res = count(guess, solution);
+    cout << res.hits << endl;
+    cout << res.pseudo_hits << endl;
 }
