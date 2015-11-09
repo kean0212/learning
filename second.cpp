@@ -2217,6 +2217,74 @@ Result_17_5 count(string guess, string solution) {
     return res;
 }
 
+// 17.6
+int getMax(int *array, int n) {
+    int res = 0;
+    while (res < n - 1) {
+        if (array[res] > array[res + 1]) {
+            break;
+        }
+        res++;
+    }
+    return res;
+}
+
+int getMin(int *array, int n) {
+    int res = n - 1;
+    while (res > 0) {
+        if (array[res - 1] > array[res]) {
+            break;
+        }
+        res--;
+    }
+    return res;
+}
+
+int findNext(int *array, int end, int min) {
+    int res = 0;
+    while (res <= end) {
+        if (array[res] > array[min]) {
+            break;
+        }
+        res++;
+    }
+    return res;
+}
+
+int findPrevious(int *array, int start, int end, int max) {
+    int res = start;
+    while (res <= end) {
+        if (array[res] > array[max]) {
+            break;
+        }
+        res++;
+    }
+    return res - 1;
+}
+
+void findMthroughN(int *array, int n) {
+    if (n <= 0 || array == NULL) {
+        cout << "Invalid input" << endl;
+    }
+    
+    int max_left = getMax(array, n);
+    if (max_left == n - 1) {
+        cout << "Array is already sorted" << endl;
+    }
+    int min_right = getMin(array, n);
+    
+    int min_right_middle = min_right;
+    int max_left_middle = max_left;
+    for (int i = max_left + 1; i < min_right; ++i) {
+        array[i] > array[max_left_middle] ? max_left_middle = i : 0;
+        array[i] < array[min_right_middle] ? min_right_middle = i : 0;
+    }
+    
+    int M = findNext(array, max_left, min_right_middle);
+    int N = findPrevious(array, min_right, n, max_left_middle);
+    cout << M << " through " << N << endl;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2455,9 +2523,14 @@ int main() {
 //    cout << specialMax(a, b) << endl;
     
     // test 17.5
-    string guess = "GGRR";
-    string solution = "RGBY";
-    Result_17_5 res = count(guess, solution);
-    cout << res.hits << endl;
-    cout << res.pseudo_hits << endl;
+//    string guess = "GGRR";
+//    string solution = "RGBY";
+//    Result_17_5 res = count(guess, solution);
+//    cout << res.hits << endl;
+//    cout << res.pseudo_hits << endl;
+    
+    // 17.6
+//    int array[] = {1, 2, 8, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19};
+//    int n = 14;
+//    findMthroughN(array, n);
 }
