@@ -2333,6 +2333,24 @@ string printEnglish(int n) {
     return res;
 }
 
+// 17.8
+int largestSum(int *array, int n) {
+    if (array == NULL || n <= 0) {
+        return numeric_limits<int>::min();
+    }
+    int max_sum = 0;
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += array[i];
+        if (sum > max_sum) {
+            max_sum = sum;
+        } else if (sum < 0) {
+            sum = 0;
+        }
+    }
+    return max_sum;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2583,6 +2601,10 @@ int main() {
 //    findMthroughN(array, n);
     
     // test 17.7
-    int n = -12213109;
-    cout << printEnglish(n) << endl;
+//    int n = -12213109;
+//    cout << printEnglish(n) << endl;
+    
+    // test 17.8
+    int array[] = {2, -8, 3, -2, 4, -10};
+    cout << largestSum(array, 6) << endl;
 }
