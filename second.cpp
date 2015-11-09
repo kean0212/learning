@@ -2351,6 +2351,31 @@ int largestSum(int *array, int n) {
     return max_sum;
 }
 
+// 17.12
+int countPairs(int *array, int n, int expect) {
+    if (array == NULL || n <= 0) {
+        return -1;
+    }
+    vector<int> vec(array, array + n);
+    sort(vec.begin(), vec.begin() + n);
+    int res = 0;
+    int low = 0;
+    int high = n - 1;
+    while (low < high) {
+        int temp = vec[low] + vec[high];
+        if (temp == expect) {
+            res++;
+            low++;
+            high--;
+        } else if (temp > expect) {
+            high--;
+        } else {
+            low++;
+        }
+    }
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2605,6 +2630,10 @@ int main() {
 //    cout << printEnglish(n) << endl;
     
     // test 17.8
-    int array[] = {2, -8, 3, -2, 4, -10};
-    cout << largestSum(array, 6) << endl;
+//    int array[] = {2, -8, 3, -2, 4, -10};
+//    cout << largestSum(array, 6) << endl;
+    
+    // test 17.12
+    int array[] = {2, -8, 3, -2, 4, -10, -3};
+    cout << countPairs(array, 7, 1) << endl;
 }
