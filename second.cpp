@@ -2493,6 +2493,25 @@ int *shufflePokers(void (*shuffleMethod) (int *, int)) {
     return cards;
 }
 
+// 18.3
+int count2s(int n) {
+    int res = 0;
+    int fractor = 10;
+    while (true) {
+        if (n < 2 * (fractor / 10)) {
+            break;
+        }
+        res += n / fractor * (fractor / 10);
+        int remain = n % fractor;
+        int lower = 2 * (fractor / 10);
+        if (remain >= lower) {
+            res += min(fractor / 10, remain - lower + 1);
+        }
+        fractor *= 10;
+    }
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2761,6 +2780,11 @@ int main() {
 //    cout << addRecursive(a, b) << endl;
     
     // test 18.2
-    shufflePokers(shuffleIteratively);
-    shufflePokers(shuffleRecursively);
+//    shufflePokers(shuffleIteratively);
+//    shufflePokers(shuffleRecursively);
+    
+    // test 18.3
+    cout << count2s(212) << endl;
+    cout << count2s(12) << endl;
+    cout << count2s(213) << endl;
 }
