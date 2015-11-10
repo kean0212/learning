@@ -2376,6 +2376,56 @@ int countPairs(int *array, int n, int expect) {
     return res;
 }
 
+// 17.13
+struct BiNode {
+    BiNode *node1;
+    BiNode *node2;
+    int data;
+};
+
+void concat(BiNode *n1, BiNode *n2) {
+    n1->node1 = n2;
+    n2->node2 = n1;
+}
+
+BiNode *convertBST2DL(BiNode *root) {
+    if (root == NULL) {
+        return NULL;
+    }
+    if (root->node1 == NULL && root->node2 == NULL) {
+        root->node1 = root;
+        root->node2 = root;
+        return root;
+    }
+    BiNode *head_left = convertBST2DL(root->node1);
+    BiNode *head_right = convertBST2DL(root->node2);
+    BiNode *temp = head_right == NULL ? NULL : head_right->node2;
+    if (head_left == NULL) {
+        concat(head_right->node2, root);
+    } else {
+        concat(head_left->node2, root);
+    }
+    if (head_right == NULL) {
+        concat(root, head_left);
+    } else {
+        concat(root, head_right);
+    }
+    if (head_left != NULL && head_right != NULL) {
+        concat(temp, head_left);
+    }
+    return head_left == NULL ? root : head_left;
+}
+
+BiNode *BST2DL(BiNode *root) {
+    if (root == NULL) {
+        return NULL;
+    }
+    BiNode *res = convertBST2DL(root);
+    res->node2->node1 = NULL;
+    res->node2 = NULL;
+    return res;
+}
+
 // main function
 int main() {
     // test 1.1
