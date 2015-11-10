@@ -19,6 +19,7 @@
 #include <list>
 #include <limits>
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -2450,6 +2451,48 @@ int addRecursive(int a, int b) {
     return addRecursive(sum, carry);
 }
 
+// 18.2
+// Recursive solution
+int rand(int i) {
+    srand(time(NULL));
+    return rand() % i; // 0 ~ i - 1
+}
+
+void shuffleRecursively(int *cards, int i) {
+    if (i == 0) {
+        return;
+    }
+    shuffleRecursively(cards, i - 1);
+    int k = rand(i + 1);
+    int temp = cards[k];
+    cards[k] = cards[i];
+    cards[i] = temp;
+}
+
+// Iterative solution
+void shuffleIteratively(int *cards, int n) {
+    for (int i = 0; i < n; ++i) {
+        int k = rand(i + 1);
+        int temp = cards[k];
+        cards[k] = cards[i];
+        cards[i] = temp;
+    }
+}
+
+int *shufflePokers(void (*shuffleMethod) (int *, int)) {
+    int n = 52;
+    int *cards = new int[n]();
+    for (int i = 0; i < n; ++i) {
+        cards[i] = i;
+    }
+    shuffleMethod(cards, 51);
+    for (int i = 0; i < n; ++i) {
+        cout << cards[i] << " ";
+    }
+    cout << endl;
+    return cards;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2712,8 +2755,12 @@ int main() {
 //    cout << countPairs(array, 7, 1) << endl;
 
     // test 18.1
-    int a = 5;
-    int b = -3;
-    cout << addIterative(a, b) << endl;
-    cout << addRecursive(a, b) << endl;
+//    int a = 5;
+//    int b = -3;
+//    cout << addIterative(a, b) << endl;
+//    cout << addRecursive(a, b) << endl;
+    
+    // test 18.2
+    shufflePokers(shuffleIteratively);
+    shufflePokers(shuffleRecursively);
 }
