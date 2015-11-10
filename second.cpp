@@ -2426,6 +2426,30 @@ BiNode *BST2DL(BiNode *root) {
     return res;
 }
 
+// 18.1
+// Iterative solution
+int addIterative(int a, int b) {
+    int res = a ^ b;
+    int carry = a & b;
+    int temp;
+    while (carry) {
+        carry <<= 1;
+        temp = res;
+        res ^= carry;
+        carry &= temp;
+    }
+    return res;
+}
+// Recursive solution
+int addRecursive(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    int sum = a ^ b;
+    int carry = (a & b) << 1;
+    return addRecursive(sum, carry);
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2684,6 +2708,12 @@ int main() {
 //    cout << largestSum(array, 6) << endl;
     
     // test 17.12
-    int array[] = {2, -8, 3, -2, 4, -10, -3};
-    cout << countPairs(array, 7, 1) << endl;
+//    int array[] = {2, -8, 3, -2, 4, -10, -3};
+//    cout << countPairs(array, 7, 1) << endl;
+
+    // test 18.1
+    int a = 5;
+    int b = -3;
+    cout << addIterative(a, b) << endl;
+    cout << addRecursive(a, b) << endl;
 }
