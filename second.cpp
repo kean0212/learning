@@ -2498,14 +2498,15 @@ int count2s(int n) {
     int res = 0;
     int fractor = 10;
     while (true) {
-        if (n < 2 * (fractor / 10)) {
+        int lower_bound = 2 * (fractor / 10);   // 2, 20, 200, 2000 ...
+        int number = fractor / 10;              // 1, 10, 100, 1000 ...
+        if (n < lower_bound) {
             break;
         }
-        res += n / fractor * (fractor / 10);
-        int remain = n % fractor;
-        int lower = 2 * (fractor / 10);
-        if (remain >= lower) {
-            res += min(fractor / 10, remain - lower + 1);
+        res += n / fractor * number;
+        int remainder = n % fractor;
+        if (remainder >= lower_bound) {
+            res += min(number, remainder - lower_bound + 1);
         }
         fractor *= 10;
     }
