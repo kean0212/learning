@@ -20,6 +20,7 @@
 #include <limits>
 #include <fstream>
 #include <cstdlib>
+#include <cctype>
 
 using namespace std;
 
@@ -2513,6 +2514,67 @@ int count2s(int n) {
     return res;
 }
 
+// 18.10
+string toUpper(string str) {
+    string res = str;
+    for (int i = 0; i < str.length(); ++i) {
+        res[i] = toupper(str[i]);
+    }
+    return res;
+}
+
+vector<string> getOneEditAwayWords(string word) {
+    vector<string> res;
+    for (int i = 0; i < word.length(); ++i) {
+        string new_word = word;
+        for (char j = 'A'; j < 'Z'; ++j) {
+            new_word[i] = j;
+            if (new_word != word) {
+                res.push_back(new_word);
+            }
+        }
+    }
+    return res;
+}
+
+vector<string> transform(string start, string stop, unordered_set<string> dictionary) {
+    start = toUpper(start);
+    stop = toUpper(stop);
+    
+    queue<string> action_queue;
+    unordered_set<string> visited_words;
+    map<string, string> backtrack_map;
+    
+    action_queue.push(start);
+    visited_words.insert(start);
+    
+    while (!action_queue.empty()) {
+        string word = action_queue.front();
+        action_queue.pop();
+        for (string new_word : getOneEditAwayWords(word)) {
+            if (new_word == stop) {
+                vector<string> res;
+                res.push_back(stop);
+                while (word != start) {
+                    res.push_back(word);
+                    word = backtrack_map[word];
+                }
+                res.push_back(start);
+                return res;
+            }
+            if (dictionary.count(new_word)) {
+                if (visited_words.count(new_word) == 0) {
+                    action_queue.push(new_word);
+                    visited_words.insert(new_word);
+                    backtrack_map[new_word] = word;
+                }
+            }
+        }
+    }
+    vector<string> empty_res;
+    return empty_res;
+}
+
 // main function
 int main() {
     // test 1.1
@@ -2785,7 +2847,15 @@ int main() {
 //    shufflePokers(shuffleRecursively);
     
     // test 18.3
-    cout << count2s(212) << endl;
-    cout << count2s(12) << endl;
-    cout << count2s(213) << endl;
+//    cout << count2s(212) << endl;
+//    cout << count2s(12) << endl;
+//    cout << count2s(213) << endl;
+
+    // test 18.10
+    unordered_set<string> dictionary( {"LAMP", "LIME", "NONE", "LIMP", "LIKE", "DAMP"} );
+    vector<string> res = transform("DAMP", "LIKE", dictionary);
+    for (int i = 0; i < res.size(); ++i) {
+        cout << res[i] << " ";
+    }
+    cout << endl;
 }
