@@ -2575,6 +2575,59 @@ vector<string> transform(string start, string stop, unordered_set<string> dictio
     return empty_res;
 }
 
+class Stack {
+    queue<int> q1;
+    queue<int> q2;
+public:
+    // Push element x onto stack.
+    void push(int x) {
+        if (q1.empty()) {
+            q2.push(x);
+        } else {
+            q1.push(x);
+        }
+    }
+    
+    // Removes the element on top of the stack.
+    void pop() {
+        if (q1.empty() && q2.empty()) {
+            return;
+        } else {
+            if (q1.empty()) {
+                // q2 is holding all the data
+                int count = q2.size();
+                for (int i = 0; i < count - 1; ++i) {
+                    q1.push(q2.front());
+                    q2.pop();
+                }
+                q2.pop();
+            } else {
+                // q1 is holding all the data
+                int count = q1.size();
+                for (int i = 0; i < count - 1; ++i) {
+                    q2.push(q1.front());
+                    q1.pop();
+                }
+                q1.pop();
+            }
+        }
+    }
+    
+    // Get the top element.
+    int top() {
+        if (q1.empty()) {
+            return q2.back();
+        } else {
+            return q1.back();
+        }
+    }
+    
+    // Return whether the stack is empty.
+    bool empty() {
+        return q1.empty() && q2.empty();
+    }
+};
+
 // main function
 int main() {
     // test 1.1
@@ -2852,10 +2905,24 @@ int main() {
 //    cout << count2s(213) << endl;
 
     // test 18.10
-    unordered_set<string> dictionary( {"LAMP", "LIME", "NONE", "LIMP", "LIKE", "DAMP"} );
-    vector<string> res = transform("DAMP", "LIKE", dictionary);
-    for (int i = 0; i < res.size(); ++i) {
-        cout << res[i] << " ";
-    }
-    cout << endl;
+//    unordered_set<string> dictionary( {"LAMP", "LIME", "NONE", "LIMP", "LIKE", "DAMP"} );
+//    vector<string> res = transform("DAMP", "LIKE", dictionary);
+//    for (int i = 0; i < res.size(); ++i) {
+//        cout << res[i] << " ";
+//    }
+//    cout << endl;
+    
+    // test Stack
+    Stack s;
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.top();
+    s.pop();
+    s.top();
+    s.pop();
+    s.top();
+    cout << s.empty() << endl;;
+    s.pop();
+    cout << s.empty() << endl;
 }
