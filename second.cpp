@@ -2980,11 +2980,12 @@ int main() {
 //    cout << endl;
     
     // test Remove duplicates from sorted array
-    int array[] = {1, 1, 1, 1, 1};
-    vector<int> nums(array, array + 5);
-    cout << "length " << removeDuplicates(nums) << endl;
-    for (int i = 0; i < nums.size(); ++i) {
-        cout << nums[i] << " ";
-    }
-    cout << endl;
+//    int array[] = {1, 1, 1, 1, 1};
+//    vector<int> nums(array, array + 5);
+//    cout << "length " << removeDuplicates(nums) << endl;
+//    for (int i = 0; i < nums.size(); ++i) {
+//        cout << nums[i] << " ";
+//    }
+//    cout << endl;
+    
 }
