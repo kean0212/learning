@@ -2575,6 +2575,7 @@ vector<string> transform(string start, string stop, unordered_set<string> dictio
     return empty_res;
 }
 
+// Implementing queues using stacks
 class Stack {
     queue<int> q1;
     queue<int> q2;
@@ -2627,6 +2628,51 @@ public:
         return q1.empty() && q2.empty();
     }
 };
+
+// Pascal triangle - kth row
+class PascalSolution {
+    int factorial(int n, vector<int> &cache) {
+        if (n == 0) {
+            return 1;
+        }
+        if (cache[n] != 0) {
+            return cache[n];
+        }
+        int res = n * factorial(n - 1, cache);
+        cache[n] = res;
+        return res;
+    }
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> row;
+        if (rowIndex < 0) {
+            return row;
+        }
+        vector<int> cache(rowIndex, 0);
+        for (int i = 0; i <= rowIndex; ++i) {
+            row.push_back(factorial(rowIndex, cache) / (factorial(i, cache) * factorial(rowIndex - i, cache)));
+        }
+        return row;
+    }
+};
+
+// Remove duplicates
+int removeDuplicates(vector<int>& nums) {
+    int size = nums.size();
+    if (size <= 1) {
+        return size;
+    }
+    int j = 0;
+    for (int i = 1; i < size; ++i) {
+        if (nums[i] != nums[j]) {
+            if (i != j + 1) {
+                nums[j + 1] = nums[i];
+            }
+            j++;
+        }
+    }
+    return j + 1;
+}
 
 // main function
 int main() {
@@ -2913,16 +2959,32 @@ int main() {
 //    cout << endl;
     
     // test Stack
-    Stack s;
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.top();
-    s.pop();
-    s.top();
-    s.pop();
-    s.top();
-    cout << s.empty() << endl;;
-    s.pop();
-    cout << s.empty() << endl;
+//    Stack s;
+//    s.push(1);
+//    s.push(2);
+//    s.push(3);
+//    s.top();
+//    s.pop();
+//    s.top();
+//    s.pop();
+//    s.top();
+//    cout << s.empty() << endl;;
+//    s.pop();
+//    cout << s.empty() << endl;
+    
+//    PascalSolution p;
+//    vector<int> res = p.getRow(2);
+//    for (int i = 0; i < res.size(); ++i) {
+//        cout << res[i] << " ";
+//    }
+//    cout << endl;
+    
+    // test Remove duplicates from sorted array
+    int array[] = {1, 1, 1, 1, 1};
+    vector<int> nums(array, array + 5);
+    cout << "length " << removeDuplicates(nums) << endl;
+    for (int i = 0; i < nums.size(); ++i) {
+        cout << nums[i] << " ";
+    }
+    cout << endl;
 }
