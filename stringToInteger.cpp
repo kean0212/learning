@@ -11,7 +11,7 @@ class Solution {
         if (pos != string::npos) {
             char c = str[pos];
             if (c == '+' || c == '-') {
-                if (pos < str.length() - 1 && str[pos + 1] >= '0' && str[pos + 1] <= '9') {
+                if (pos < str.length() - 1 && isdigit(str[pos + 1])) {
                     c == '+' ? sign = 1 : sign = -1;
                     return pos + 1;
                 }
@@ -29,7 +29,7 @@ class Solution {
         double min_int = numeric_limits<int>::min();
         for (int i = 0; i < str.length(); ++i) {
             char c = str[i];
-            if (c < '0' || c > '9') {
+            if (!isdigit(c)) {
                 break;
             } else {
                 res = res * 10 + c - '0';
