@@ -22,7 +22,7 @@ class Solution {
 public:
     vector<string> letterCombinations(string digits) {
         vector<string> res;
-        string mapping(digits.length(), ' ');
+        string mapping(digits.length(), '\0');
         unordered_map<char, string> hash_table({
             {'1', ""},
             {'2', "abc"},
