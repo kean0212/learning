@@ -33,6 +33,17 @@ public:
     }
 };
 
+void test(int* x) {
+    if (x == NULL) {
+        x = new int[1];
+    }
+    if (*x == 100) {
+        cout << "Succeed" << endl;
+        return;
+    }
+    *x = *x + 1;
+    test(x);
+}
 int main() {
     TreeNode root(1);
     TreeNode left(2);
@@ -40,5 +51,8 @@ int main() {
     root.left = &left;
     root.right = &right;
     Solution s;
-    cout << s.isValidBST(&root) << endl;
+//    cout << s.isValidBST(&root) << endl;
+    int* x = NULL;
+    test(x);
+    cout << x << endl;
 }
