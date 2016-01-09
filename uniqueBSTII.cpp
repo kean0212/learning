@@ -34,20 +34,10 @@ class Solution {
     }
 public:
     vector<TreeNode*> generateTrees(int n) {
-        vector<TreeNode*> res;
-        for (int i = 1; i <= n; ++i) {
-            vector<TreeNode*> left_subtrees = generateSubtrees(1, i - 1);
-            vector<TreeNode*> right_subtrees = generateSubtrees(i + 1, n);
-            for (TreeNode* left_subtree : left_subtrees) {
-                for (TreeNode* right_subtree : right_subtrees) {
-                    TreeNode *root = new TreeNode(i);
-                    root->left = left_subtree;
-                    root->right = right_subtree;
-                    res.push_back(root);
-                }
-            }
+        if (n == 0) {
+            return vector<TreeNode*> ({});
         }
-        return res;
+        return generateSubtrees(1, n);
     }
 };
 int main() {
