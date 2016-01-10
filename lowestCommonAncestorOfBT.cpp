@@ -10,64 +10,76 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//class Solution {
+//    struct Result {
+//        bool isAncestor;
+//        TreeNode *node;
+//        Result(bool i, TreeNode* n) {
+//            isAncestor = i;
+//            node = n;
+//        }
+//    };
+//    Result helper(TreeNode* root, TreeNode* p, TreeNode* q) {
+//        if (root == NULL) {
+//            return Result(false, NULL);
+//        }
+//        Result left_res = helper(root->left, p, q);
+//        Result right_res = helper(root->right, p, q);
+////        if (left_res.node) {
+////            cout << "root " << root->val << endl;
+////            cout << "left_res is " << left_res.node->val << endl;
+////        }
+////        if (right_res.node) {
+////            cout << "root " << root->val << endl;
+////            cout << "right_res is " << right_res.node->val << endl;
+////        }
+//        // Cases where ancestor has been found
+//        if (left_res.isAncestor) {
+//            return left_res;
+//        }
+//        if (right_res.isAncestor) {
+//            return right_res;
+//        }
+//        // Cases where root is ancestor
+//        if ((left_res.node == p && right_res.node == q) ||
+//            (left_res.node == q && right_res.node == p) ||
+//            (root == p && (left_res.node == q || right_res.node == q)) ||
+//            (root == q && (left_res.node == p || right_res.node == p)) ||
+//            (root == p && root == q)) {
+//            return Result(true, root);
+//        }
+//        // Cases where p or q is found
+//        if (root == p || root == q) {
+//            return Result(false, root);
+//        }
+//        if (left_res.node && !right_res.node) {
+//            return left_res;
+//        }
+//        if (!left_res.node && right_res.node) {
+//            return right_res;
+//        }
+//        return Result(false, NULL);
+//    }
+//public:
+//    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//        Result res = helper(root, p, q);
+//        if (res.isAncestor) {
+//            return res.node;
+//        }
+//        cout << "hello world" << endl;
+//        return NULL;
+//    }
+//};
+
 class Solution {
-    struct Result {
-        bool isAncestor;
-        TreeNode *node;
-        Result(bool i, TreeNode* n) {
-            isAncestor = i;
-            node = n;
-        }
-    };
-    Result helper(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if (root == NULL) {
-            return Result(false, NULL);
-        }
-        Result left_res = helper(root->left, p, q);
-        Result right_res = helper(root->right, p, q);
-//        if (left_res.node) {
-//            cout << "root " << root->val << endl;
-//            cout << "left_res is " << left_res.node->val << endl;
-//        }
-//        if (right_res.node) {
-//            cout << "root " << root->val << endl;
-//            cout << "right_res is " << right_res.node->val << endl;
-//        }
-        // Cases where ancestor has been found
-        if (left_res.isAncestor) {
-            return left_res;
-        }
-        if (right_res.isAncestor) {
-            return right_res;
-        }
-        // Cases where root is ancestor
-        if ((left_res.node == p && right_res.node == q) ||
-            (left_res.node == q && right_res.node == p) ||
-            (root == p && (left_res.node == q || right_res.node == q)) ||
-            (root == q && (left_res.node == p || right_res.node == p)) ||
-            (root == p && root == q)) {
-            return Result(true, root);
-        }
-        // Cases where p or q is found
-        if (root == p || root == q) {
-            return Result(false, root);
-        }
-        if (left_res.node && !right_res.node) {
-            return left_res;
-        }
-        if (!left_res.node && right_res.node) {
-            return right_res;
-        }
-        return Result(false, NULL);
-    }
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        Result res = helper(root, p, q);
-        if (res.isAncestor) {
-            return res.node;
+        if (root == NULL || root == p || root == q) {
+            return root;
         }
-        cout << "hello world" << endl;
-        return NULL;
+        TreeNode* left_res = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right_res = lowestCommonAncestor(root->right, p, q);
+        return !left_res ? right_res : (!right_res ? left_res : root);
     }
 };
 
