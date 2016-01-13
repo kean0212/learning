@@ -10,42 +10,21 @@ struct  ListNode {
 	}
 };
 
-ListNode* mergeSortedLists(ListNode* head1, ListNode* head2) {
-	if (!head1) {
-		return head2;
-	}
-	if (!head2) {
-		return head1;
-	}
-	ListNode* head = NULL;
-	ListNode* tail = NULL;
+ListNode* merge(ListNode* head1, ListNode* head2) {
+	ListNode head(1);
+	ListNode* tail = &head;
 	while (head1 && head2) {
-		if (head1->val <= head2->val) {
-			if (!head) {
-				head = head1;
-				tail = head1;
-			} else {
-				tail->next = head1;
-				tail = tail->next;
-			}
+		if (head1->val < head2->val) {
+			tail->next = head1;
 			head1 = head1->next;
 		} else {
-			if (!head) {
-				head = head2;
-				tail = head2;
-			} else {
-				tail->next = head2;
-				tail = tail->next;
-			}
+			tail->next = head2;
 			head2 = head2->next;
 		}
+		tail = tail->next;
 	}
-	if (!head1) {
-		tail->next = head2;
-	} else {
-		tail->next = head1;
-	}
-	return head;
+	tail->next = head1 ? head1 : head2;
+	return head.next;
 }
 
 ListNode* sort(ListNode* head) {
@@ -53,8 +32,8 @@ ListNode* sort(ListNode* head) {
 		return head;
 	}
 	ListNode* ptr1 = head;
-	ListNode* ptr2 = head;
-	while (ptr2 && ptr2->next && ptr2->next->next) {
+	ListNode* ptr2 = head->next;
+	while (ptr2 && ptr2->next) {
 		ptr1 = ptr1->next;
 		ptr2 = ptr2->next->next;
 	}
@@ -62,7 +41,7 @@ ListNode* sort(ListNode* head) {
 	ptr1->next = NULL;
 	ListNode* first_sorted_list = sort(head);
 	ListNode* second_sorted_list = sort(ptr2);
-	return mergeSortedLists(first_sorted_list, second_sorted_list);
+	return merge(first_sorted_list, second_sorted_list);
 }
 
 int main() {
