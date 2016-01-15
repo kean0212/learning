@@ -24,6 +24,7 @@ void merge(ListNode* &head1, ListNode* &head2) {
         tail = tail->next;
     }
     tail->next = head1 ? head1 : head2;
+    head1 = head.next;
 }
 
 // Sort the list in-place using merge
@@ -56,6 +57,7 @@ void test(ListNode* l) {
             cout << "FAIL" << endl;
             return;
         }
+        l = l->next;
     }
     cout << "PASS" << endl;
 }
@@ -85,6 +87,11 @@ int main() {
     sortList(l2);
     cout << "Ascending List of Odd Length: ";
     test(l2);
+    while (l2) {
+        cout << l2->val << " ";
+        l2 = l2->next;
+    }
+    cout << endl;
     
     // case 3 - ascending list of even length
     ListNode* l3 = &n1;
@@ -92,6 +99,11 @@ int main() {
     sortList(l3);
     cout << "Asending List of Even Length: ";
     test(l3);
+    while (l3) {
+        cout << l3->val << " ";
+        l3 = l3->next;
+    }
+    cout << endl;
     
     // case 4 - descending list of odd length
     ListNode* l4 = &n9;
@@ -100,20 +112,40 @@ int main() {
     sortList(l4);
     cout << "Descending List of Odd Length: ";
     test(l4);
+    while (l4) {
+        cout << l4->val << " ";
+        l4 = l4->next;
+    }
+    cout << endl;
     
     // case 5 - descending list of even length
     ListNode* l5 = &n9;
+    n9.next = &n8;
+    n8.next = &n7;
     n7.next = &n6;
     sortList(l5);
     cout << "Descending List of Even Lenght: ";
     test(l5);
+    while (l5) {
+        cout << l5->val << " ";
+        l5 = l5->next;
+    }
+    cout << endl;
     
     // case 6 - list with duplicates
     ListNode* l6 = &n9;
+    n9.next = &n8;
+    n8.next = &n7;
+    n7.next = &n6;
     n6.next = &n10;
     sortList(l6);
     cout << "Descending List with Duplicates: ";
     test(l6);
+    while (l6) {
+        cout << l6->val << " ";
+        l6 = l6->next;
+    }
+    cout << endl;
     
     // case 7 - combine all previous situations
     ListNode* l7 = &n8;
@@ -129,4 +161,9 @@ int main() {
     sortList(l7);
     cout << "Combined Test: ";
     test(l7);
+    while (l7) {
+        cout << l7->val << " ";
+        l7 = l7->next;
+    }
+    cout << endl;
 }
