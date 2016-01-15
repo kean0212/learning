@@ -58,5 +58,5 @@ public:
 };
 int main() {
     Solution s;
-    
+    cout << (1.06 != 1.0) << endl;
 }
