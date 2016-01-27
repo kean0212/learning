@@ -14,4 +14,14 @@ int main() {
 //    }
     string s = "0234";
     cout << stoi(s) << endl;
+    
+    vector<int> empty;
+    cout << (empty.begin() == empty.end()) << endl;
+    
+    empty.push_back(1);
+    auto it = empty.begin();
+    cout << (++it == empty.end()) << endl;
+    
+    empty.insert(empty.end(), 2);
+    cout << empty.size() << endl;
 }
