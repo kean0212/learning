@@ -12,23 +12,39 @@ struct UndirectedGraphNode {
     UndirectedGraphNode(int x) : label(x) {};
 };
 
+//class Solution {
+//    UndirectedGraphNode* helper(UndirectedGraphNode* node, unordered_map<UndirectedGraphNode*, UndirectedGraphNode*>& hash) {
+//        if (!node) return NULL;
+//        if (!hash.count(node)) {
+//            hash[node] = new UndirectedGraphNode(node->label);
+//            for (auto x : node->neighbors) {
+//                hash[node]->neighbors.push_back(helper(x, hash));
+//            }
+//        }
+//        return hash[node];
+//    }
+//public:
+//    UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
+//        unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> hash;
+//        return helper(node, hash);
+//    }
+//    
+//};
 class Solution {
-    UndirectedGraphNode* helper(UndirectedGraphNode* node, unordered_map<UndirectedGraphNode*, UndirectedGraphNode*>& hash) {
+    UndirectedGraphNode* helper(UndirectedGraphNode* node, unordered_map<UndirectedGraphNode*, UndirectedGraphNode*>& mapping) {
         if (!node) return NULL;
-        if (!hash.count(node)) {
-            hash[node] = new UndirectedGraphNode(node->label);
-            for (auto x : node->neighbors) {
-                hash[node]->neighbors.push_back(helper(x, hash));
-            }
+        if (mapping.count(node)) return mapping[node];
+        mapping[node] = new UndirectedGraphNode(node->label);
+        for (auto neighbor : node->neighbors) {
+            mapping[node]->neighbors.push_back(helper(neighbor, mapping));
         }
-        return hash[node];
+        return mapping[node];
     }
 public:
     UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-        unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> hash;
-        return helper(node, hash);
+        unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> mapping;
+        return helper(node, mapping);
     }
-    
 };
 
 int main() {
